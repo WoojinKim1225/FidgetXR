@@ -1,17 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Unity.Burst;
+using Unity.Entities;
+using Unity.Mathematics;
+using Unity.Transforms;
 
-public class FingerCursorSystem : MonoBehaviour
+
+[BurstCompile]
+public partial struct FingerCursorSystem : ISystem
 {
-    // Start is called before the first frame update
-    void Start()
+    public void OnCreate(ref SystemState state)
     {
         
     }
 
-    // Update is called once per frame
-    void Update()
+    [BurstCompile]
+    public void OnUpdate(ref SystemState state)
+    {
+        
+    }
+
+    public void OnDestroy(ref SystemState state)
     {
         
     }
