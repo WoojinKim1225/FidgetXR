@@ -20,8 +20,9 @@ public class FingerCursor : MonoBehaviour
     public Vector3 bezierMidDirection;
     public float bezierMidDirectionAngle;
 
-    private Object[] ShapeDatas;
+    //private List<PointData> ShapeDatas;
     private Vector3[] tipPos;
+    private PointData pointData;
 
     public Vector2 pinchMargin;
     public float pinchClickTime;
@@ -41,7 +42,7 @@ public class FingerCursor : MonoBehaviour
             fingerLines[i].InstantiatedLine = Instantiate(linePrefab);
             fingerLines[i].line = fingerLines[i].InstantiatedLine.GetComponent<Line3D>();
         }
-        ShapeDatas = new PointData[5];
+        //ShapeDatas.Clear();
     }
     
     void Start()
@@ -59,7 +60,7 @@ public class FingerCursor : MonoBehaviour
         tipPos[3] = handSkeleton.Bones[(int)OVRSkeleton.BoneId.Hand_RingTip].Transform.position;
         tipPos[4] = handSkeleton.Bones[(int)OVRSkeleton.BoneId.Hand_PinkyTip].Transform.position;
 
-        /*
+        
         for (int i = 0; i < 5; i++) {
             bool isShown = ((interactableFinger >> i) & 1) == 1;
             fingerLines[i].line.LineMeshRenderer.enabled = isShown;
@@ -70,16 +71,16 @@ public class FingerCursor : MonoBehaviour
                 StartCoroutine(IPinch(i));
             }
         }
-        */
+        
 
     }
-    /*
+    
     void OnTriggerStay(Collider other)
     {   
+        if (pointData == null) pointData = other.GetComponent<PointData>();
+        interactableFinger = (uint)pointData.interactableFinger;
         if (other.tag == "Point") {
             for (int i = 0; i < 5; i++) {
-                if (ShapeDatas[i] == null) ShapeDatas[i] = other.GetComponent<PointData>();
-                interactableFinger = (uint)pointData.InteractableFinger;
                 fingerLines[i].line.start.position = handSkeleton.Bones[(int)fingerLines[i].startBoneId].Transform.position;
                 fingerLines[i].line.end.position = other.transform.position;
 
@@ -89,18 +90,15 @@ public class FingerCursor : MonoBehaviour
         }
         
     }
-    */
+    
 
-    void OnTriggerStay(Collider other) {
-        
-    }
 
     void OnTriggerExit(Collider other)
     {
         interactableFinger = 0;
     }
 
-    /*
+    
     public IEnumerator IPinch(int i) {
         pointData.unityEventButtons[i-1].OnPress.Invoke();
         yield return waitTime;
@@ -114,7 +112,7 @@ public class FingerCursor : MonoBehaviour
         fingerLines[i].isPressed = false;
         yield break;
     }
-    */
+    
 
     public Vector3 calculateMidBezierPos(Vector3 a, Vector3 b, Transform start, Vector3 direction, float angle) {
         Vector3 d = b - a;
