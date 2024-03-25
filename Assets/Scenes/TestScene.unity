@@ -191,6 +191,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   unityEventButtons: []
   interactableFinger: 0
+  interactingFinger: 0
   segment:
     startPositionOS: {x: 0, y: 0, z: 0}
     endPositionOS: {x: 0, y: 0, z: 0}
@@ -712,6 +713,7 @@ MonoBehaviour:
   handSkeleton: {fileID: 1489637044}
   bezierMidDirection: {x: -1, y: 0, z: 0}
   bezierMidDirectionAngle: 60
+  ShapeInteractables: []
   pinchMargin: {x: 0.02, y: 0.025}
   pinchClickTime: 0.3
 --- !u!23 &776139781
@@ -1270,11 +1272,12 @@ MonoBehaviour:
             m_BoolArgument: 0
           m_CallState: 2
   interactableFinger: 6
+  interactingFinger: 0
   points:
-  - positionOS: {x: 0, y: 0, z: 0}
+  - positionOS: {x: -0.1, y: 0, z: 0}
     isToggle: 0
     state: 0
-  - positionOS: {x: 0, y: 0, z: 0}
+  - positionOS: {x: 0.1, y: 0, z: 0}
     isToggle: 0
     state: 0
 --- !u!65 &1251973477
