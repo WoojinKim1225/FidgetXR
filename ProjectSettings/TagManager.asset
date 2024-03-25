@@ -5,10 +5,13 @@ TagManager:
   serializedVersion: 2
   tags:
   - Point
-  - Quad
+  - Segment
+  - Arc
+  - Bezier
+  - Plane
+  - Disc
   - Cube
   - Cylinder
-  - Disc
   layers:
   - Default
   - TransparentFX

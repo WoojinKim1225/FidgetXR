@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -156,6 +156,133 @@ Transform:
   - {fileID: 1622734684}
   - {fileID: 1489637039}
   m_Father: {fileID: 1807530525}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &105557139
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 105557144}
+  - component: {fileID: 105557143}
+  - component: {fileID: 105557142}
+  - component: {fileID: 105557141}
+  - component: {fileID: 105557140}
+  m_Layer: 0
+  m_Name: HandDetectorSlider
+  m_TagString: Segment
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &105557140
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105557139}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40d9ffe202436dc4689c0c6ea3932c0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  unityEventButtons: []
+  Weight: 0
+  segment:
+    startPositionOS: {x: 0, y: 0, z: 0}
+    endPositionOS: {x: 0, y: 0, z: 0}
+    isQuantized: 0
+    quantizeValue: 0
+    state: {x: 0, y: 0, z: 0}
+    state01: 0
+--- !u!65 &105557141
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105557139}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.4, y: 0.4, z: 0.4}
+  m_Center: {x: 0, y: 0, z: -0.18}
+--- !u!23 &105557142
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105557139}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: d93a9dd446947a949994daa8f9af97f5, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &105557143
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105557139}
+  m_Mesh: {fileID: 7018810824537202931, guid: ffa12a711db7b4b418a957673df69cc3, type: 3}
+--- !u!4 &105557144
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 105557139}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1.477924, z: 0.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &165103111
 GameObject:
@@ -495,6 +622,8 @@ GameObject:
   - component: {fileID: 776139779}
   - component: {fileID: 776139775}
   - component: {fileID: 776139780}
+  - component: {fileID: 776139782}
+  - component: {fileID: 776139781}
   m_Layer: 0
   m_Name: Sphere
   m_TagString: Untagged
@@ -511,7 +640,7 @@ Transform:
   m_GameObject: {fileID: 776139773}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.09, y: 0.04, z: 0}
   m_LocalScale: {x: 0.1, y: 0.1, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -582,8 +711,59 @@ MonoBehaviour:
   interactableFinger: 0
   handSkeleton: {fileID: 1489637044}
   bezierMidDirection: {x: -1, y: 0, z: 0}
-  pinchMargin: {x: 0.02, y: 0.02}
-  pinchClickTime: 0.5
+  bezierMidDirectionAngle: 60
+  pinchMargin: {x: 0.02, y: 0.025}
+  pinchClickTime: 0.3
+--- !u!23 &776139781
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776139773}
+  m_Enabled: 0
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_StaticShadowCaster: 0
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: -876546973899608171, guid: 3c95b8a1939715244bae704c4b61483e, type: 3}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!33 &776139782
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 776139773}
+  m_Mesh: {fileID: 10207, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &838053994
 GameObject:
   m_ObjectHideFlags: 0
@@ -992,48 +1172,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b43e4d7b2d45f848b0f5d6be1257896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  InteractableFinger: 6
-  ThumbIndex:
-    OnPress:
-      m_PersistentCalls:
-        m_Calls: []
-    OnRelease:
-      m_PersistentCalls:
-        m_Calls: []
-    OnClick:
-      m_PersistentCalls:
-        m_Calls: []
-  ThumbMiddle:
-    OnPress:
-      m_PersistentCalls:
-        m_Calls: []
-    OnRelease:
-      m_PersistentCalls:
-        m_Calls: []
-    OnClick:
-      m_PersistentCalls:
-        m_Calls: []
-  ThumbRing:
-    OnPress:
-      m_PersistentCalls:
-        m_Calls: []
-    OnRelease:
-      m_PersistentCalls:
-        m_Calls: []
-    OnClick:
-      m_PersistentCalls:
-        m_Calls: []
-  ThumbPinky:
-    OnPress:
-      m_PersistentCalls:
-        m_Calls: []
-    OnRelease:
-      m_PersistentCalls:
-        m_Calls: []
-    OnClick:
-      m_PersistentCalls:
-        m_Calls: []
   unityEventButtons: []
+  Weight: 0
+  points: []
 --- !u!65 &1251973477
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1053,8 +1194,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.4, y: 0.4, z: 0.4}
-  m_Center: {x: 0, y: 0, z: -0.1}
+  m_Size: {x: 0.1, y: 0.1, z: 0.1}
+  m_Center: {x: 0, y: 0, z: -0.05}
 --- !u!23 &1251973478
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1075,7 +1216,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: d93a9dd446947a949994daa8f9af97f5, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -2031,3 +2172,4 @@ SceneRoots:
   - {fileID: 2003677902}
   - {fileID: 1606222535}
   - {fileID: 1251973480}
+  - {fileID: 105557144}

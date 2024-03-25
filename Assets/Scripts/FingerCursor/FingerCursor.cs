@@ -18,8 +18,9 @@ public class FingerCursor : MonoBehaviour
     public uint interactableFinger;
     public OVRSkeleton handSkeleton;
     public Vector3 bezierMidDirection;
+    public float bezierMidDirectionAngle;
 
-    private PointData pointData;
+    private Object[] ShapeDatas;
     private Vector3[] tipPos;
 
     public Vector2 pinchMargin;
@@ -40,7 +41,7 @@ public class FingerCursor : MonoBehaviour
             fingerLines[i].InstantiatedLine = Instantiate(linePrefab);
             fingerLines[i].line = fingerLines[i].InstantiatedLine.GetComponent<Line3D>();
         }
-        pointData = null;
+        ShapeDatas = new PointData[5];
     }
     
     void Start()
@@ -51,36 +52,47 @@ public class FingerCursor : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (!handSkeleton.IsDataValid) return;
         tipPos[0] = handSkeleton.Bones[(int)OVRSkeleton.BoneId.Hand_ThumbTip].Transform.position;
         tipPos[1] = handSkeleton.Bones[(int)OVRSkeleton.BoneId.Hand_IndexTip].Transform.position;
         tipPos[2] = handSkeleton.Bones[(int)OVRSkeleton.BoneId.Hand_MiddleTip].Transform.position;
         tipPos[3] = handSkeleton.Bones[(int)OVRSkeleton.BoneId.Hand_RingTip].Transform.position;
         tipPos[4] = handSkeleton.Bones[(int)OVRSkeleton.BoneId.Hand_PinkyTip].Transform.position;
 
+        /*
         for (int i = 0; i < 5; i++) {
             bool isShown = ((interactableFinger >> i) & 1) == 1;
             fingerLines[i].line.LineMeshRenderer.enabled = isShown;
             if (i == 0) continue;
             if (isShown && Vector3.Distance(tipPos[0], tipPos[i]) < pinchMargin.x && !fingerLines[i].isPressed) {
                 fingerLines[i].isPressed = true;
+                Debug.Log("Pressed!: " + i);
                 StartCoroutine(IPinch(i));
             }
         }
+        */
 
     }
-
+    /*
     void OnTriggerStay(Collider other)
-    {
+    {   
         if (other.tag == "Point") {
-            if (pointData == null) pointData = other.GetComponent<PointData>();
-            interactableFinger = (uint)pointData.InteractableFinger;
             for (int i = 0; i < 5; i++) {
+                if (ShapeDatas[i] == null) ShapeDatas[i] = other.GetComponent<PointData>();
+                interactableFinger = (uint)pointData.InteractableFinger;
                 fingerLines[i].line.start.position = handSkeleton.Bones[(int)fingerLines[i].startBoneId].Transform.position;
                 fingerLines[i].line.end.position = other.transform.position;
-                float distance = (fingerLines[i].line.start.position - fingerLines[i].line.end.position).magnitude;
-                fingerLines[i].line.middleBezier.position = handSkeleton.Bones[(int)fingerLines[i].startBoneId].Transform.TransformPoint(bezierMidDirection * distance * 0.5f);
+
+                fingerLines[i].line.middleBezier.position = calculateMidBezierPos(fingerLines[i].line.start.position, fingerLines[i].line.end.position, handSkeleton.Bones[(int)fingerLines[i].startBoneId].Transform, bezierMidDirection, bezierMidDirectionAngle);
             }
+            return;
         }
+        
+    }
+    */
+
+    void OnTriggerStay(Collider other) {
+        
     }
 
     void OnTriggerExit(Collider other)
@@ -88,15 +100,28 @@ public class FingerCursor : MonoBehaviour
         interactableFinger = 0;
     }
 
+    /*
     public IEnumerator IPinch(int i) {
         pointData.unityEventButtons[i-1].OnPress.Invoke();
         yield return waitTime;
         if (Vector3.Distance(tipPos[0], tipPos[i]) > pinchMargin.y) {
             pointData.unityEventButtons[i-1].OnClick.Invoke();
+            fingerLines[i].isPressed = false;
             yield break;
         }
         yield return new WaitUntil(() => Vector3.Distance(tipPos[0], tipPos[i]) > pinchMargin.y);
         pointData.unityEventButtons[i-1].OnRelease.Invoke();
+        fingerLines[i].isPressed = false;
         yield break;
+    }
+    */
+
+    public Vector3 calculateMidBezierPos(Vector3 a, Vector3 b, Transform start, Vector3 direction, float angle) {
+        Vector3 d = b - a;
+        Vector3 d1 = Vector3.Project(d, start.TransformDirection(direction).normalized);
+        Vector3 d2 = d - d1;
+        if (Vector3.Angle(d1, d) > angle) d2 = Vector3.Normalize(d2) * Vector3.Magnitude(d1) * Mathf.Tan(angle * Mathf.Deg2Rad);
+        if (Vector3.Dot(d1, start.TransformDirection(direction)) < 0) d1 *= -1;
+        return start.position + ((d1 + d2) * 0.5f);
     }
 }
