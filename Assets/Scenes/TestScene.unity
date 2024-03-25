@@ -189,10 +189,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 40d9ffe202436dc4689c0c6ea3932c0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unityEventButtons: []
-  interactableFinger: 0
-  interactingFinger: 0
   segment:
+    fingerNum: 0
     startPositionOS: {x: 0, y: 0, z: 0}
     endPositionOS: {x: 0, y: 0, z: 0}
     isQuantized: 0
@@ -713,7 +711,7 @@ MonoBehaviour:
   handSkeleton: {fileID: 1489637044}
   bezierMidDirection: {x: -1, y: 0, z: 0}
   bezierMidDirectionAngle: 60
-  ShapeInteractables: []
+  ShapeData: []
   pinchMargin: {x: 0.02, y: 0.025}
   pinchClickTime: 0.3
 --- !u!23 &776139781
@@ -1174,112 +1172,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0b43e4d7b2d45f848b0f5d6be1257896, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  unityEventButtons:
-  - OnPress:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1251973478}
-          m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-          m_MethodName: set_material
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 2100000, guid: 13fe76cd3d7f1014b8608ece26920eea,
-              type: 2}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    OnRelease:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1251973478}
-          m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-          m_MethodName: set_sharedMaterial
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 2100000, guid: d93a9dd446947a949994daa8f9af97f5,
-              type: 2}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    OnClick:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1251973478}
-          m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-          m_MethodName: set_material
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 2100000, guid: 7b8fda18bcaee854eac844cf9570442d,
-              type: 2}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  - OnPress:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1251973478}
-          m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-          m_MethodName: set_material
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 2100000, guid: 8b4b9b2d714f24b47ace9b5e2f505240,
-              type: 2}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    OnRelease:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1251973478}
-          m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-          m_MethodName: set_sharedMaterial
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 2100000, guid: d93a9dd446947a949994daa8f9af97f5,
-              type: 2}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-    OnClick:
-      m_PersistentCalls:
-        m_Calls:
-        - m_Target: {fileID: 1251973478}
-          m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
-          m_MethodName: set_material
-          m_Mode: 2
-          m_Arguments:
-            m_ObjectArgument: {fileID: 2100000, guid: 7b8fda18bcaee854eac844cf9570442d,
-              type: 2}
-            m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
-            m_IntArgument: 0
-            m_FloatArgument: 0
-            m_StringArgument: 
-            m_BoolArgument: 0
-          m_CallState: 2
-  interactableFinger: 6
-  interactingFinger: 0
   points:
   - positionOS: {x: -0.1, y: 0, z: 0}
     isToggle: 0
     state: 0
+    unityEventButton:
+      OnPress:
+        m_PersistentCalls:
+          m_Calls: []
+      OnRelease:
+        m_PersistentCalls:
+          m_Calls: []
+      OnClick:
+        m_PersistentCalls:
+          m_Calls: []
   - positionOS: {x: 0.1, y: 0, z: 0}
     isToggle: 0
     state: 0
+    unityEventButton:
+      OnPress:
+        m_PersistentCalls:
+          m_Calls: []
+      OnRelease:
+        m_PersistentCalls:
+          m_Calls: []
+      OnClick:
+        m_PersistentCalls:
+          m_Calls: []
+  interactableFinger: 6
 --- !u!65 &1251973477
 BoxCollider:
   m_ObjectHideFlags: 0

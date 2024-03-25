@@ -23,7 +23,8 @@ public class FingerCursor : MonoBehaviour
     public float bezierMidDirectionAngle;
 
     //private List<PointData> ShapeDatas;
-    [SerializeField] private List<GameObject> ShapeInteractables;
+    [SerializeField] private List<GameObject> ShapeData;
+    private int[] shapeDataConnectedEvent;
     private Vector3[] tipPos;
     private PointData pointData;
 
@@ -46,11 +47,12 @@ public class FingerCursor : MonoBehaviour
             fingerLines[i].line = fingerLines[i].InstantiatedLine.GetComponent<Line3D>();
         }
         //ShapeDatas.Clear();
-        ShapeInteractables = new List<GameObject>() {null, null, null, null, null};
+        ShapeData = new List<GameObject>() {null, null, null, null, null};
+        shapeDataConnectedEvent = new int[5] {-1, -1, -1, -1, -1};
     }
 
     private void OnDisable() {
-        ShapeInteractables.Clear();
+        ShapeData.Clear();
     }
     
     void Start()
@@ -68,7 +70,7 @@ public class FingerCursor : MonoBehaviour
         tipPos[3] = handSkeleton.Bones[(int)OVRSkeleton.BoneId.Hand_RingTip].Transform.position;
         tipPos[4] = handSkeleton.Bones[(int)OVRSkeleton.BoneId.Hand_PinkyTip].Transform.position;
 
-        
+        /*
         for (int i = 0; i < 5; i++) {
             bool isShown = ((interactableFinger >> i) & 1) == 1;
             fingerLines[i].line.LineMeshRenderer.enabled = isShown;
@@ -78,14 +80,15 @@ public class FingerCursor : MonoBehaviour
 
             fingerLines[i].line.middleBezier.position = calculateMidBezierPos(fingerLines[i].line.start.position, fingerLines[i].line.end.position, handSkeleton.Bones[(int)fingerLines[i].startBoneId].Transform, bezierMidDirection, bezierMidDirectionAngle);
             if (i == 0) continue;
-            /*
+            
             if (isShown && Vector3.Distance(tipPos[0], tipPos[i]) < pinchMargin.x && !fingerLines[i].isPressed) {
                 fingerLines[i].isPressed = true;
                 Debug.Log("Pressed!: " + i);
                 StartCoroutine(IPinch(i));
             }
-            */
+            
         }
+        */
         
         
 
@@ -93,6 +96,44 @@ public class FingerCursor : MonoBehaviour
     
     private void FixedUpdate() {
         
+    }
+
+    void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Point") {
+            PointData pointData = other.GetComponent<PointData>();
+            uint finger = (uint)pointData.interactableFinger;
+            int j = 0;
+            for (int i = 0; i < 5; i++) {
+                if (((finger >> i) & 1) == 0) continue;
+                if (((interactableFinger >> i) & 1) == 0) {
+                    ShapeData[i] = other.gameObject;
+                    shapeDataConnectedEvent[i] = j;
+                    interactableFinger |= (uint)(1 << i);
+                }
+                j++;
+            }
+            
+        }
+        
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Point") {
+            PointData pointData = other.GetComponent<PointData>();
+            uint finger = (uint)pointData.interactableFinger;
+            int j = 0;
+            for (int i = 0; i < 5; i++) {
+                if (((finger >> i) & 1) == 0) continue;
+                if (((interactableFinger >> i) & 1) == 1 && ShapeData[i] == other.gameObject) {
+                    ShapeData[i] = null;
+                    shapeDataConnectedEvent[i] = -1;
+                    interactableFinger ^= (uint)(1 << i);
+                }
+                j++;
+            }
+        }
     }
     /*
     void OnTriggerStay(Collider other)
@@ -110,7 +151,7 @@ public class FingerCursor : MonoBehaviour
         }
     }
     */
-
+    /*
     private void OnTriggerEnter(Collider other) {
         int requiredFinger = getRequiredFingerFromShapeData(other.gameObject);
 
@@ -138,7 +179,8 @@ public class FingerCursor : MonoBehaviour
             interactableFinger ^= (uint)(1 << i);
         }
     }
-
+    */
+    /*
     public int getRequiredFingerFromShapeData(GameObject other) {
         switch (other.tag)
         {
@@ -164,7 +206,8 @@ public class FingerCursor : MonoBehaviour
                 return Vector3.zero;
         }
     }
-    
+    */
+    /*
     public IEnumerator IPinch(int i) {
         pointData.unityEventButtons[i-1].OnPress.Invoke();
         yield return waitTime;
@@ -178,6 +221,7 @@ public class FingerCursor : MonoBehaviour
         fingerLines[i].isPressed = false;
         yield break;
     }
+    */
     
 
     public Vector3 calculateMidBezierPos(Vector3 a, Vector3 b, Transform start, Vector3 direction, float angle) {

@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 [System.Serializable]
 public struct Segment {
+    public int fingerNum;
     public Vector3 startPositionOS, endPositionOS;
     public bool isQuantized;
     public int quantizeValue;
@@ -12,7 +13,7 @@ public struct Segment {
     public float state01;
 }
 
-public class SegmentData : ShapeInteractable
+public class SegmentData : MonoBehaviour
 {
     public Segment segment;
     // Start is called before the first frame update
