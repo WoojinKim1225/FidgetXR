@@ -17,17 +17,12 @@
 
 
 ## General Information
-- Provide general information about your project here.
-- What problem does it (intend to) solve?
-- What is the purpose of your project?
-- Why did you undertake it?
-<!-- You don't have to answer all the questions - just the ones relevant to your project. -->
-
+- This project is developed by WoojinKim1225 as a research undergraduate student, a demonstration of human focused XR computing environment 
+- Typical VR Interactions are done in 2D screen in virtual space. Lacking of precise movements, speed, feedback, and automations, these are the obstacles to the commercialization of VR devices.
+- Using Full Color Passthrough and Hand Tracking, I try to overcome these limitations through various movements that human hands can do.
 
 ## Technologies Used
-- Tech 1 - version 1.0
-- Tech 2 - version 2.0
-- Tech 3 - version 3.0
+- Unity3D, Shaders, Meta Quest's Scene API and Depth API, Bash scripting
 
 
 ## Features
@@ -56,7 +51,7 @@ Provide various use cases and code examples here.
 
 
 ## Project Status
-Project is: _in progress_ / _complete_ / _no longer being worked on_. If you are no longer working on it, provide reasons why.
+Project is: [_in progress_] / _complete_ / _no longer being worked on_. If you are no longer working on it, provide reasons why.
 
 
 ## Room for Improvement
