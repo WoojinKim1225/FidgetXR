@@ -3,19 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 
 
-public abstract class ShapeInteractable : MonoBehaviour {
+public abstract class ShapeInteractive : MonoBehaviour {
     public List<UnityEventButton> unityEventButtons;
 
     public Dictionary<int, UnityEventButton> unityEventButtonsDictionary;
 
-    public EInteractableFinger interactableFinger;
-    public EInteractableFinger interactingFinger = EInteractableFinger.None;
+    public EConnectFinger interactiveFinger;
+    public EConnectFinger interactingFinger = EConnectFinger.None;
 
     private void Awake() {
         int j = 0;
         unityEventButtonsDictionary = null;
         for (int i = 0; i < 5; i++) {
-            if ((((int)interactableFinger >> i) & 1) == 1) {
+            if ((((int)interactiveFinger >> i) & 1) == 1) {
                 unityEventButtonsDictionary.Add(i, unityEventButtons[j]);
                 j++;
             }

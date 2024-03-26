@@ -15,7 +15,7 @@ public struct Arc {
     public float state01;
 }
 
-public class ArcData : ShapeInteractable
+public class ArcData : ShapeInteractive
 {
     public Arc arc;
     // Start is called before the first frame update

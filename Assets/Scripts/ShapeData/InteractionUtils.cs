@@ -7,8 +7,13 @@ public struct UnityEventButton {
     public UnityEvent OnPress, OnRelease, OnClick;
 }
 
+[System.Serializable]
+public struct UnityEventSlider {
+    public UnityEvent OnSelect, OnDeselect, OnZero, OnOne, OnValueChange;
+}
+
 [Flags]
-public enum EInteractableFinger {
+public enum EConnectFinger {
     None = 0,
     Thumb = 1,
     Index = 2,

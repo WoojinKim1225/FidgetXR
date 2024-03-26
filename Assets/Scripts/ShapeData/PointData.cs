@@ -5,29 +5,69 @@ using UnityEngine.Events;
 
 [System.Serializable]
 public struct Point {
-    public Vector3 positionOS;
     public bool isToggle;
-    public bool state;
 
     public UnityEventButton unityEventButton;
 }
 
 public class PointData : MonoBehaviour
 {
-    public List<Point> points;
-    public EInteractableFinger interactableFinger;
+    [SerializeField] private List<Point> points;
+    
+    // The positions of each points in Object Space.
+    public List<Vector3> pointPositionOS;
 
+    public EConnectFinger connectFinger;
+    public uint connectedFinger;
 
-    // Start is called before the first frame update
-    void Start()
-    {
+    public uint states;
+    private uint statesBefore;
 
+    private uint onStates, offStates;
 
+    [SerializeField] private bool isFingerDependent;
+
+    public void setStates(int bit, int value){
+        if (value == 0) {
+            states &= ~(1u << bit);
+        } else {
+            states |= 1u << bit;
+        }
     }
-
-    // Update is called once per frame
+    
     void Update()
     {
+        if (statesBefore != states) {
+            onStates = states & ~statesBefore;
+            offStates = ~states & statesBefore;
+            Debug.Log(onStates.ToString() + ", " +  offStates.ToString());
+            
+
+            if (!isFingerDependent) {
+                for (int i = 0; i < points.Count; i++) {
+                    if (((onStates >> i) & 1) == 1) {
+                        points[i].unityEventButton.OnPress.Invoke();
+                        buttonClickIndependent(i);
+                    }
+                    if (((offStates >> i) & 1) == 1) {
+                        points[i].unityEventButton.OnRelease.Invoke();
+                    }
+                }
+            } else {
+                
+            }
+
+            statesBefore = states;
+        }
+
         
     }
+
+    public IEnumerator buttonClickIndependent(int value) {
+        yield return new WaitForSeconds(0.5f);
+        if (((offStates >> value) & 1) == 1) {
+            points[value].unityEventButton.OnClick.Invoke();
+        }
+    }
+
 }

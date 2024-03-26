@@ -5,17 +5,27 @@ using UnityEngine.Events;
 
 [System.Serializable]
 public struct Segment {
-    public int fingerNum;
-    public Vector3 startPositionOS, endPositionOS;
     public bool isQuantized;
     public int quantizeValue;
-    public Vector3 state;
-    public float state01;
+    
+    public UnityEventSlider unityEventSlider;
 }
 
 public class SegmentData : MonoBehaviour
 {
     public Segment segment;
+
+    public Vector3 startPositionOS, endPositionOS;
+    private Vector3 startPositionWS => transform.TransformPoint(startPositionOS);
+    private Vector3 endPositionWS => transform.TransformPoint(endPositionOS);
+
+    public EConnectFinger connectFinger;
+    public uint connectedFinger;
+
+    [Range(0,1)]
+    public float state01;
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -28,7 +38,9 @@ public class SegmentData : MonoBehaviour
         
     }
 
-    private void OnDisable() {
-        
+    public void GetStateFromFingerPosition(Vector3 fingerPositionWS) {
+        Vector3 AB = endPositionWS - startPositionWS;
+        Vector3 AC = fingerPositionWS - startPositionWS;
+        //float AD_distance = 
     }
 }

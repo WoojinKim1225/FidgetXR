@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public struct FingerLine {
@@ -17,16 +18,16 @@ public class FingerCursor : MonoBehaviour
 {
     [SerializeField] private GameObject linePrefab;
     private FingerLine[] fingerLines;
-    public uint interactableFinger;
+    [SerializeField] private uint connectFinger;
     public OVRSkeleton handSkeleton;
     public Vector3 bezierMidDirection;
     public float bezierMidDirectionAngle;
 
     //private List<PointData> ShapeDatas;
-    [SerializeField] private List<GameObject> ShapeData;
+    [SerializeField] private List<GameObject> ShapeGameObjects;
+    //[SerializeField] private List<Object> ShapeData;
     private int[] shapeDataConnectedEvent;
     private Vector3[] tipPos;
-    private PointData pointData;
 
     public Vector2 pinchMargin;
     public float pinchClickTime;
@@ -46,13 +47,13 @@ public class FingerCursor : MonoBehaviour
             fingerLines[i].InstantiatedLine = Instantiate(linePrefab);
             fingerLines[i].line = fingerLines[i].InstantiatedLine.GetComponent<Line3D>();
         }
-        //ShapeDatas.Clear();
-        ShapeData = new List<GameObject>() {null, null, null, null, null};
+        ShapeGameObjects = new List<GameObject>() {null, null, null, null, null};
+        //ShapeData = new List<Object>() {null, null, null, null, null};
         shapeDataConnectedEvent = new int[5] {-1, -1, -1, -1, -1};
     }
 
     private void OnDisable() {
-        ShapeData.Clear();
+        //ShapeData.Clear();
     }
     
     void Start()
@@ -60,7 +61,6 @@ public class FingerCursor : MonoBehaviour
         waitTime = new WaitForSecondsRealtime(pinchClickTime);
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (!handSkeleton.IsDataValid) return;
@@ -70,28 +70,38 @@ public class FingerCursor : MonoBehaviour
         tipPos[3] = handSkeleton.Bones[(int)OVRSkeleton.BoneId.Hand_RingTip].Transform.position;
         tipPos[4] = handSkeleton.Bones[(int)OVRSkeleton.BoneId.Hand_PinkyTip].Transform.position;
 
-        /*
         for (int i = 0; i < 5; i++) {
-            bool isShown = ((interactableFinger >> i) & 1) == 1;
+            bool isShown = hasBit(connectFinger, i);
             fingerLines[i].line.LineMeshRenderer.enabled = isShown;
             if (!isShown) continue;
             fingerLines[i].line.start.position = handSkeleton.Bones[(int)fingerLines[i].startBoneId].Transform.position;
-            fingerLines[i].line.end.position = getEndPointFromShapeData(ShapeInteractables[i], i);
+
+            switch (ShapeGameObjects[i].tag) {
+                case "Point":
+                    PointData pointData = ShapeGameObjects[i].GetComponent<PointData>();
+                    fingerLines[i].line.end.position = pointData.transform.TransformPoint(pointData.pointPositionOS[shapeDataConnectedEvent[i]]);
+
+                    if (i != 0 && Vector3.Distance(tipPos[0], tipPos[i]) < pinchMargin.x && !hasBit(pointData.states, shapeDataConnectedEvent[i])) {
+                        pointData.setStates(shapeDataConnectedEvent[i], 1);
+                    }
+
+                    if (i != 0 && Vector3.Distance(tipPos[0], tipPos[i]) > pinchMargin.y && hasBit(pointData.states, shapeDataConnectedEvent[i])) {
+                        pointData.setStates(shapeDataConnectedEvent[i], 0);
+                    }
+                    break;
+                case "Segment":
+                    SegmentData segmentData = ShapeGameObjects[i].GetComponent<SegmentData>();
+                    fingerLines[i].line.end.position = segmentData.transform.TransformPoint(Vector3.Lerp(segmentData.startPositionOS, segmentData.endPositionOS, segmentData.state01));
+
+                    break;
+                default:
+                    break;
+            }
 
             fingerLines[i].line.middleBezier.position = calculateMidBezierPos(fingerLines[i].line.start.position, fingerLines[i].line.end.position, handSkeleton.Bones[(int)fingerLines[i].startBoneId].Transform, bezierMidDirection, bezierMidDirectionAngle);
-            if (i == 0) continue;
-            
-            if (isShown && Vector3.Distance(tipPos[0], tipPos[i]) < pinchMargin.x && !fingerLines[i].isPressed) {
-                fingerLines[i].isPressed = true;
-                Debug.Log("Pressed!: " + i);
-                StartCoroutine(IPinch(i));
-            }
+
             
         }
-        */
-        
-        
-
     }
     
     private void FixedUpdate() {
@@ -100,130 +110,84 @@ public class FingerCursor : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Point") {
-            PointData pointData = other.GetComponent<PointData>();
-            uint finger = (uint)pointData.interactableFinger;
-            int j = 0;
-            for (int i = 0; i < 5; i++) {
-                if (((finger >> i) & 1) == 0) continue;
-                if (((interactableFinger >> i) & 1) == 0) {
-                    ShapeData[i] = other.gameObject;
-                    shapeDataConnectedEvent[i] = j;
-                    interactableFinger |= (uint)(1 << i);
+        EConnectFinger otherFinger;
+        int j;
+        switch (other.tag) {
+            case "Point":
+                PointData otherPointData = other.GetComponent<PointData>();
+                otherFinger = otherPointData.connectFinger;
+                j = 0;
+                for (int i = 0; i < 5; i++) {
+                    if (!hasBit((uint)otherFinger, i)) continue;
+                    if (!hasBit(connectFinger,i)) {
+                        ShapeGameObjects[i] = other.gameObject;
+                        shapeDataConnectedEvent[i] = j;
+                        connectFinger = setBit(connectFinger, i, 1);
+                        otherPointData.connectedFinger = setBit(otherPointData.connectedFinger, i, 1);
+                    }
+                    j++;
                 }
-                j++;
-            }
-            
-        }
-        
-    }
-
-    void OnTriggerExit(Collider other)
-    {
-        if (other.tag == "Point") {
-            PointData pointData = other.GetComponent<PointData>();
-            uint finger = (uint)pointData.interactableFinger;
-            int j = 0;
-            for (int i = 0; i < 5; i++) {
-                if (((finger >> i) & 1) == 0) continue;
-                if (((interactableFinger >> i) & 1) == 1 && ShapeData[i] == other.gameObject) {
-                    ShapeData[i] = null;
-                    shapeDataConnectedEvent[i] = -1;
-                    interactableFinger ^= (uint)(1 << i);
+                break;
+            case "Segment":
+                SegmentData otherSegmentData = other.GetComponent<SegmentData>();
+                otherFinger = otherSegmentData.connectFinger;
+                j = 0;
+                for (int i = 0; i < 5; i++) {
+                    if (!hasBit((uint)otherFinger, i)) continue;
+                    if (!hasBit(connectFinger,i)) {
+                        ShapeGameObjects[i] = other.gameObject;
+                        shapeDataConnectedEvent[i] = j;
+                        connectFinger = setBit(connectFinger, i, 1);
+                        otherSegmentData.connectedFinger = setBit(otherSegmentData.connectedFinger, i, 1);
+                    }
+                    j++;
                 }
-                j++;
-            }
-        }
-    }
-    /*
-    void OnTriggerStay(Collider other)
-    {   
-        if (pointData == null) pointData = other.GetComponent<PointData>();
-        interactableFinger = (uint)pointData.interactableFinger;
-        if (other.tag == "Point") {
-            for (int i = 0; i < 5; i++) {
-                fingerLines[i].line.start.position = handSkeleton.Bones[(int)fingerLines[i].startBoneId].Transform.position;
-                fingerLines[i].line.end.position = other.transform.position;
-
-                fingerLines[i].line.middleBezier.position = calculateMidBezierPos(fingerLines[i].line.start.position, fingerLines[i].line.end.position, handSkeleton.Bones[(int)fingerLines[i].startBoneId].Transform, bezierMidDirection, bezierMidDirectionAngle);
-            }
-            return;
-        }
-    }
-    */
-    /*
-    private void OnTriggerEnter(Collider other) {
-        int requiredFinger = getRequiredFingerFromShapeData(other.gameObject);
-
-        if (requiredFinger == -1) return;
-        
-        for (int i = 0; i < 5; i++) {
-            if (((requiredFinger >> i) & 1) == 0) continue;
-            if (ShapeInteractables[i] != null) continue;
-            ShapeInteractables[i] = other.gameObject;
-            interactableFinger |= (uint)(1 << i);
+                break;
+            default:
+                break;
         }
     }
 
     void OnTriggerExit(Collider other)
     {
-        int requiredFinger = getRequiredFingerFromShapeData(other.gameObject);
-        
-        if (requiredFinger == -1) return;
-        Debug.Log(requiredFinger + ", " + other);
-        
-        for (int i = 0; i < 5; i++) {
-            if (((requiredFinger >> i) & 1) == 0) continue;
-            //if (ShapeInteractables[i] == other) 
-            ShapeInteractables[i] = null;
-            interactableFinger ^= (uint)(1 << i);
-        }
-    }
-    */
-    /*
-    public int getRequiredFingerFromShapeData(GameObject other) {
-        switch (other.tag)
-        {
+        EConnectFinger otherFinger;
+        int j;
+        switch (other.tag) {
             case "Point":
-                return (int)other.GetComponent<PointData>().interactableFinger;
+                PointData otherPointData = other.GetComponent<PointData>();
+                otherFinger = otherPointData.connectFinger;
+                j = 0;
+                for (int i = 0; i < 5; i++) {
+                    if (!hasBit((uint)otherFinger, i)) continue;
+                    if (hasBit(connectFinger,i) && ShapeGameObjects[i] == other.gameObject) {
+                        ShapeGameObjects[i] = null;
+                        shapeDataConnectedEvent[i] = -1;
+                        connectFinger = setBit(connectFinger, i, 0);
+                        otherPointData.connectedFinger = setBit(otherPointData.connectedFinger, i, 0);
+                    }
+                    j++;
+                }
+                break;
             case "Segment":
-                return (int)other.GetComponent<SegmentData>().interactableFinger;
+                SegmentData otherSegmentData = other.GetComponent<SegmentData>();
+                otherFinger = otherSegmentData.connectFinger;
+                j = 0;
+                for (int i = 0; i < 5; i++) {
+                    if (!hasBit((uint)otherFinger, i)) continue;
+                    if (hasBit(connectFinger,i) && ShapeGameObjects[i] == other.gameObject) {
+                        ShapeGameObjects[i] = null;
+                        shapeDataConnectedEvent[i] = -1;
+                        connectFinger = setBit(connectFinger, i, 0);
+                        otherSegmentData.connectedFinger = setBit(otherSegmentData.connectedFinger, i, 0);
+                    }
+                    j++;
+                }
+                break;
             default:
-                return -1;
+                break;
         }
     }
-
-    public Vector3 getEndPointFromShapeData(GameObject other, int fingerNum) {
-        switch (other.tag)
-        {
-            case "Point":
-                Transform trs = other.GetComponent<PointData>().transform;
-                return trs.TransformPoint(other.GetComponent<PointData>().points[fingerNum].positionOS);
-            case "Segment":
-                trs = other.GetComponent<SegmentData>().transform;
-                return trs.TransformPoint(other.GetComponent<SegmentData>().segment.state);
-            default:
-                return Vector3.zero;
-        }
-    }
-    */
-    /*
-    public IEnumerator IPinch(int i) {
-        pointData.unityEventButtons[i-1].OnPress.Invoke();
-        yield return waitTime;
-        if (Vector3.Distance(tipPos[0], tipPos[i]) > pinchMargin.y) {
-            pointData.unityEventButtons[i-1].OnClick.Invoke();
-            fingerLines[i].isPressed = false;
-            yield break;
-        }
-        yield return new WaitUntil(() => Vector3.Distance(tipPos[0], tipPos[i]) > pinchMargin.y);
-        pointData.unityEventButtons[i-1].OnRelease.Invoke();
-        fingerLines[i].isPressed = false;
-        yield break;
-    }
-    */
     
-
     public Vector3 calculateMidBezierPos(Vector3 a, Vector3 b, Transform start, Vector3 direction, float angle) {
         Vector3 d = b - a;
         Vector3 d1 = Vector3.Project(d, start.TransformDirection(direction).normalized);
@@ -231,5 +195,17 @@ public class FingerCursor : MonoBehaviour
         if (Vector3.Angle(d1, d) > angle) d2 = Vector3.Normalize(d2) * Vector3.Magnitude(d1) * Mathf.Tan(angle * Mathf.Deg2Rad);
         if (Vector3.Dot(d1, start.TransformDirection(direction)) < 0) d1 *= -1;
         return start.position + ((d1 + d2) * 0.5f);
+    }
+
+    public bool hasBit(uint source, int bit) {
+        return ((source >> bit) & 1) == 1;
+    }
+
+    public uint setBit(uint source, int bit, int value) {
+        if (value == 0) {
+            return source & ~(1u << bit);
+        } else {
+            return source | (1u << bit);
+        }
     }
 }

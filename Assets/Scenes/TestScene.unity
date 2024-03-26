@@ -176,7 +176,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &105557140
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,13 +190,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   segment:
-    fingerNum: 0
-    startPositionOS: {x: 0, y: 0, z: 0}
-    endPositionOS: {x: 0, y: 0, z: 0}
     isQuantized: 0
     quantizeValue: 0
-    state: {x: 0, y: 0, z: 0}
-    state01: 0
+    unityEventSlider:
+      OnZero:
+        m_PersistentCalls:
+          m_Calls: []
+      OnOne:
+        m_PersistentCalls:
+          m_Calls: []
+      OnValueChanged:
+        m_PersistentCalls:
+          m_Calls: []
+  startPositionOS: {x: 0, y: 0.2, z: 0}
+  endPositionOS: {x: 0, y: -0.2, z: 0}
+  connectFinger: 2
+  connectedFinger: 0
+  state01: 0
 --- !u!65 &105557141
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -277,7 +287,7 @@ Transform:
   m_GameObject: {fileID: 105557139}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.477924, z: 0.4}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -707,11 +717,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   linePrefab: {fileID: 9154258551017587195, guid: 36be4a8292174fa4e832bff67200c43e,
     type: 3}
-  interactableFinger: 0
+  connectFinger: 0
   handSkeleton: {fileID: 1489637044}
   bezierMidDirection: {x: -1, y: 0, z: 0}
   bezierMidDirectionAngle: 60
-  ShapeData: []
+  ShapeGameObjects: []
   pinchMargin: {x: 0.02, y: 0.025}
   pinchClickTime: 0.3
 --- !u!23 &776139781
@@ -1159,7 +1169,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1251973476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1173,9 +1183,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   points:
-  - positionOS: {x: -0.1, y: 0, z: 0}
-    isToggle: 0
-    state: 0
+  - isToggle: 0
     unityEventButton:
       OnPress:
         m_PersistentCalls:
@@ -1186,9 +1194,7 @@ MonoBehaviour:
       OnClick:
         m_PersistentCalls:
           m_Calls: []
-  - positionOS: {x: 0.1, y: 0, z: 0}
-    isToggle: 0
-    state: 0
+  - isToggle: 0
     unityEventButton:
       OnPress:
         m_PersistentCalls:
@@ -1199,7 +1205,13 @@ MonoBehaviour:
       OnClick:
         m_PersistentCalls:
           m_Calls: []
-  interactableFinger: 6
+  pointPositionOS:
+  - {x: -0.01, y: 0, z: 0}
+  - {x: 0.01, y: 0, z: 0}
+  connectFinger: 6
+  connectedFinger: 0
+  states: 0
+  isFingerDependent: 0
 --- !u!65 &1251973477
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1280,7 +1292,7 @@ Transform:
   m_GameObject: {fileID: 1251973475}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.477924, z: 0.4}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
