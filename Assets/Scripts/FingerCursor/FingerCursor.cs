@@ -93,6 +93,15 @@ public class FingerCursor : MonoBehaviour
                     SegmentData segmentData = ShapeGameObjects[i].GetComponent<SegmentData>();
                     fingerLines[i].line.end.position = segmentData.transform.TransformPoint(Vector3.Lerp(segmentData.startPositionOS, segmentData.endPositionOS, segmentData.state01));
 
+                    if (i != 0 && Vector3.Distance(tipPos[0], tipPos[i]) < pinchMargin.x) {
+                        segmentData.isSelect = true;
+                        segmentData.fingerPositionWS = fingerLines[i].line.start.position;
+                    }
+
+                    if (i != 0 && Vector3.Distance(tipPos[0], tipPos[i]) > pinchMargin.y) {
+                        segmentData.isSelect = false;
+                    }
+
                     break;
                 default:
                     break;

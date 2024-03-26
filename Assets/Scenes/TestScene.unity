@@ -190,23 +190,31 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   segment:
-    isQuantized: 0
-    quantizeValue: 0
+    isQuantized: 1
+    quantizeValue: 10
     unityEventSlider:
+      OnSelect:
+        m_PersistentCalls:
+          m_Calls: []
+      OnDeselect:
+        m_PersistentCalls:
+          m_Calls: []
       OnZero:
         m_PersistentCalls:
           m_Calls: []
       OnOne:
         m_PersistentCalls:
           m_Calls: []
-      OnValueChanged:
+      OnValueChange:
         m_PersistentCalls:
           m_Calls: []
   startPositionOS: {x: 0, y: 0.2, z: 0}
   endPositionOS: {x: 0, y: -0.2, z: 0}
-  connectFinger: 2
+  connectFinger: 8
   connectedFinger: 0
   state01: 0
+  isSelect: 0
+  fingerPositionWS: {x: 0, y: 0, z: 0}
 --- !u!65 &105557141
 BoxCollider:
   m_ObjectHideFlags: 0
