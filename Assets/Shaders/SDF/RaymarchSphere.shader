@@ -18,7 +18,7 @@ Shader "Unlit/RaymarchSphere"
             
             #define MAX_STEPS 100
             #define MAX_DIST 100
-            #define SURF_DIST 1e-4
+            #define SURF_DIST 1e-3
 
             struct appdata
             {
@@ -42,13 +42,29 @@ Shader "Unlit/RaymarchSphere"
                 v2f o;
                 o.vertex = TransformObjectToHClip(v.vertex.xyz);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
-                o.ro = _WorldSpaceCameraPos;
+                o.ro = mul(unity_WorldToObject, float4(_WorldSpaceCameraPos.xyz, 1));
                 o.hitPos = v.vertex;
                 return o;
             }
+
+            float smoothMax(float a, float b, float k) {
+                return log(exp(k * a) + exp(k*b)) / k;
+            }
+
+            float smoothMin(float a, float b, float k) {
+                return -smoothMax(-a, -b, k);
+            }
+
+            float boxSDF(float3 p) {
+                return length(max(abs(p)- float3(0.1, 0.5, 0.5), 0));
+            }
+
+            float sphereSDF(float3 p) {
+                return length(p) - 0.5;
+            }
             
             float GetDist(float3 p) {
-                float d = length(p) - 0.5;
+                float d = smoothMin(boxSDF(p), sphereSDF(p), 10);
                 return d;
             }
 
