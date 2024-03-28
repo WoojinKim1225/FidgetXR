@@ -12,6 +12,11 @@ public struct UnityEventSlider {
     public UnityEvent OnSelect, OnDeselect, OnZero, OnOne, OnValueChange;
 }
 
+[System.Serializable]
+public struct UnityEventQuad {
+    public UnityEvent OnPress, OnRelease, OnClick, OnValueChange;
+}
+
 [Flags]
 public enum EConnectFinger {
     None = 0,

@@ -68,7 +68,7 @@ Shader "Unlit/RaymarchSphere"
             }
             
             float GetDist(float3 p) {
-                float d = smoothMin(sphereSDF(p, float3(0, 0, 0), 0.5), sphereSDF(p, float3(0, 0.5, 0), 0.2), 4);
+                float d = sphereSDF(p, float3(0, 0, 0), 1);
                 return d;
             }
 

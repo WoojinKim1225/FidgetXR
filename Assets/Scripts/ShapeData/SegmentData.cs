@@ -16,8 +16,7 @@ public class SegmentData : MonoBehaviour
     [SerializeField] private Segment segment;
 
     public Vector3 startPositionOS, endPositionOS;
-    private Vector3 startPositionWS;
-    private Vector3 endPositionWS;
+    private Vector3 startPositionWS, endPositionWS;
 
     public EConnectFinger connectFinger;
     public uint connectedFinger;
