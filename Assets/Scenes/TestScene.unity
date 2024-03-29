@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -1254,7 +1254,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &1251973476
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1272,10 +1272,36 @@ MonoBehaviour:
     unityEventButton:
       OnPress:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 1251973478}
+            m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+            m_MethodName: set_sharedMaterial
+            m_Mode: 2
+            m_Arguments:
+              m_ObjectArgument: {fileID: 2100000, guid: 13fe76cd3d7f1014b8608ece26920eea,
+                type: 2}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
       OnRelease:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 1251973478}
+            m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+            m_MethodName: set_sharedMaterial
+            m_Mode: 2
+            m_Arguments:
+              m_ObjectArgument: {fileID: 2100000, guid: d93a9dd446947a949994daa8f9af97f5,
+                type: 2}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
       OnClick:
         m_PersistentCalls:
           m_Calls: []
@@ -1283,7 +1309,20 @@ MonoBehaviour:
     unityEventButton:
       OnPress:
         m_PersistentCalls:
-          m_Calls: []
+          m_Calls:
+          - m_Target: {fileID: 1251973478}
+            m_TargetAssemblyTypeName: UnityEngine.Renderer, UnityEngine
+            m_MethodName: set_sharedMaterial
+            m_Mode: 2
+            m_Arguments:
+              m_ObjectArgument: {fileID: 2100000, guid: 8b4b9b2d714f24b47ace9b5e2f505240,
+                type: 2}
+              m_ObjectArgumentAssemblyTypeName: UnityEngine.Material, UnityEngine
+              m_IntArgument: 0
+              m_FloatArgument: 0
+              m_StringArgument: 
+              m_BoolArgument: 0
+            m_CallState: 2
       OnRelease:
         m_PersistentCalls:
           m_Calls: []
@@ -1316,8 +1355,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.1, y: 0.1, z: 0.1}
-  m_Center: {x: 0, y: 0, z: -0.05}
+  m_Size: {x: 0.25214475, y: 0.3098923, z: 0.22946052}
+  m_Center: {x: -0.023794323, y: -0.036483347, z: -0.11473026}
 --- !u!23 &1251973478
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1646,7 +1685,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0.019607844}
+  m_BackGroundColor: {r: 0, g: 0, b: 0, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1946,7 +1985,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!65 &1606222534
 BoxCollider:
   m_ObjectHideFlags: 0

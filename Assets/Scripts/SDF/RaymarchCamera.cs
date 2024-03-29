@@ -2,67 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(Camera))]
 [ExecuteInEditMode]
 public class RaymarchCamera : MonoBehaviour
 {
-    [SerializeField] private Shader _shader;
+    [SerializeField]private Camera _camera;
 
-    [SerializeField] private Material _raymarchMaterial;
-    public Material RaymarchMaterial {
-        get {
-            if (!_raymarchMaterial && _shader) {
-                _raymarchMaterial = new Material(_shader);
-                _raymarchMaterial.hideFlags = HideFlags.HideAndDontSave;
-            }
-            return _raymarchMaterial;
-        }
-    }
-
-    private Camera _camera;
-    public Camera Camera {
-        get{
-            if (!_camera) {
-                _camera = GetComponent<Camera>();
-            }
-            return _camera;
-        }
-    }
-
-    void OnRenderImage(RenderTexture src, RenderTexture dest)
-    {
-        if (!_raymarchMaterial) {
-            Graphics.Blit(src, dest);
-            return;
-        }
-        _raymarchMaterial.SetMatrix("_CameraFrustum", GetCameraFrustum(_camera));
-        _raymarchMaterial.SetMatrix("_CStoWS", _camera.cameraToWorldMatrix);
-        _raymarchMaterial.SetVector("_CameraWS", _camera.transform.position);
-
-        RenderTexture.active = dest;
-        GL.PushMatrix();
-        GL.LoadOrtho();
-        _raymarchMaterial.SetPass(0);
-        GL.Begin(GL.QUADS);
-
-        //bl
-        GL.MultiTexCoord2(0, 0.0f, 0.0f);
-        GL.Vertex3(0.0f, 0.0f, 3.0f);
-
-        //br
-        GL.MultiTexCoord2(0, 1.0f, 0.0f);
-        GL.Vertex3(1.0f, 0.0f, 2.0f);
-
-        //tr
-        GL.MultiTexCoord2(0, 1.0f, 1.0f);
-        GL.Vertex3(1.0f, 1.0f, 1.0f);
-
-        //tl
-        GL.MultiTexCoord2(0, 0.0f, 1.0f);
-        GL.Vertex3(0.0f, 1.0f, 0.0f);
-
-        GL.End();
-        GL.PopMatrix();
+    private void LateUpdate() {
+        transform.localPosition = Vector3.forward * (_camera.nearClipPlane + 1f/128f);
+        float viewPortScale = 2 * Mathf.Tan(_camera.fieldOfView * 0.5f * Mathf.Deg2Rad) * (_camera.nearClipPlane + 1f/128f);
+        transform.localScale = new Vector3(viewPortScale * _camera.aspect, viewPortScale, 1);
     }
 
     private Matrix4x4 GetCameraFrustum(Camera c)

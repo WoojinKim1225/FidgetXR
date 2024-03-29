@@ -1,4 +1,4 @@
-Shader "Unlit/RaymarchSphere"
+Shader "Unlit/Raymarch"
 {
     Properties
     {
@@ -6,7 +6,8 @@ Shader "Unlit/RaymarchSphere"
     }
     SubShader
     {
-        Tags { "RenderType" = "Opaque" "RenderPipeline" = "UniversalRenderPipeline" }
+        Tags { "RenderType"="Opaque" "RenderPipeline" = "UniversalRenderPipeline" }
+        LOD 100
 
         Pass
         {
@@ -23,8 +24,8 @@ Shader "Unlit/RaymarchSphere"
 
             struct appdata
             {
-                float4 vertex   : POSITION;
-                float2 uv : TEXCOORD0;              
+                float4 vertex : POSITION;
+                float2 uv : TEXCOORD0;
             };
 
             struct v2f
@@ -34,41 +35,24 @@ Shader "Unlit/RaymarchSphere"
                 float3 ro : TEXCOORD1;
                 float3 hitPos : TEXCOORD2;
             };
-            
-            sampler2D _MainTex;
-            //uniform sampler2D _CameraDepthTexture;
-            float4 _MainTex_ST;
 
-            v2f vert(appdata v)
+            sampler2D _MainTex;
+            float4 _MainTex_ST;
+            uniform sampler2D _CameraDepthTexture;
+
+            v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = TransformObjectToHClip(v.vertex.xyz);
                 o.uv = TRANSFORM_TEX(v.uv, _MainTex);
                 o.ro = _WorldSpaceCameraPos;
-                o.hitPos = v.vertex;//mul(unity_ObjectToWorld, v.vertex.xyz);
+                o.hitPos = mul(unity_ObjectToWorld, v.vertex);
                 return o;
             }
-            /*
-            float smoothMax(float a, float b, float k) {
-                return log(exp(k * a) + exp(k * b)) / k;
-            }
 
-            float smoothMin(float a, float b, float k) {
-                return -smoothMax(-a, -b, k);
-            }
-
-            float boxSDF(float3 p) {
-                return length(max(abs(p)- float3(0.1, 0.5, 0.5), 0));
-            }
-
-            float sphereSDF(float3 p, float3 center, float radius) {
-                return length(p - center) - radius;
-            }
-            */
-            
             float GetDist(float3 p) {
                 float d = length(p) - 0.5;
-                return d;
+                return d;//mod(d, 2);
             }
 
             float Raymarch(float3 ro, float3 rd) {
@@ -80,7 +64,6 @@ Shader "Unlit/RaymarchSphere"
                     dO += dS;
                     if (dS < SURF_DIST || dO > MAX_DIST) break;
                 }
-
                 return dO;
             }
 
@@ -91,24 +74,25 @@ Shader "Unlit/RaymarchSphere"
                 return normalize(n);
             }
 
-            float4 frag(v2f i) : SV_Target
+            float4 frag (v2f i) : SV_Target
             {
-                //Light mainLight = GetMainLight();
-                //float3 lDirOS = mul(unity_WorldToObject, mainLight.direction);
+                Light mainLight = GetMainLight();
+
                 float2 uv = i.uv - 0.5;
                 float3 ro = i.ro;
                 float3 rd = normalize(i.hitPos - ro);
-                //float depth = LinearEyeDepth(tex2D(_CameraDepthTexture, i.screenPos.xy).r, _ZBufferParams);
-                float4 col = 0;
-                float d = Raymarch(ro, rd);
-                //col.x = depth;
-                //return col;
 
-                if (d < MAX_DIST) {
+                float depth = LinearEyeDepth(tex2D(_CameraDepthTexture, i.uv).r, _ZBufferParams);
+                
+                float4 col = 0;
+
+                float d = Raymarch(ro, rd);
+
+                if (d < MAX_DIST && d < depth) {
                     float3 p = ro + rd * d;
                     float3 n = GetNormal(p);
-                    //col = saturate(dot(lDirOS, n));
-                    col.xyz = n;
+                    col = saturate(dot(mainLight.direction, n));
+                    //col.xyz = n;
                 } else {
                     discard;
                 }
