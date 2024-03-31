@@ -1,0 +1,51 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!21 &2100000
+Material:
+  serializedVersion: 8
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: RaymarchFullScreen
+  m_Shader: {fileID: -6465566751694194690, guid: eb17aa7e5ecca054db9018d631ae6de2,
+    type: 3}
+  m_Parent: {fileID: 0}
+  m_ModifiedSerializedProperties: 0
+  m_ValidKeywords: []
+  m_InvalidKeywords: []
+  m_LightmapFlags: 4
+  m_EnableInstancingVariants: 0
+  m_DoubleSidedGI: 0
+  m_CustomRenderQueue: -1
+  stringTagMap: {}
+  disabledShaderPasses: []
+  m_LockedProperties: 
+  m_SavedProperties:
+    serializedVersion: 3
+    m_TexEnvs:
+    - unity_Lightmaps:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_LightmapsInd:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    - unity_ShadowMasks:
+        m_Texture: {fileID: 0}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
+    m_Ints: []
+    m_Floats:
+    - _Add: 0
+    - _IOR: 0
+    - _LeftPalmView: 0
+    - _RightPalmView: 0
+    m_Colors:
+    - _HandPosition: {r: -0.13, g: -0.065, b: -0.03, a: 0}
+    - _LeftHandPointerDir: {r: 0.008780034, g: -0.0020766698, b: 0.028611159, a: 0}
+    - _LeftHandPointerPos: {r: -0.7053672, g: 1.2928584, b: -0.3310054, a: 0.013338774}
+    - _RightHandPointerDir: {r: 0.008961884, g: -0.002756608, b: 0.028497119, a: 0}
+    - _RightHandPointerPos: {r: -0.58314455, g: 1.2992549, b: -0.41134572, a: 0.016970048}
+  m_BuildTextureStacks: []
