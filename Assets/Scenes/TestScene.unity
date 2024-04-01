@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
+  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -410,7 +410,6 @@ GameObject:
   - component: {fileID: 407633460}
   - component: {fileID: 407633463}
   - component: {fileID: 407633462}
-  - component: {fileID: 407633464}
   m_Layer: 0
   m_Name: Cursor right
   m_TagString: Untagged
@@ -481,27 +480,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &407633464
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 407633459}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9c09b8d442db4104ab7220bbb5799f9c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  linePrefab: {fileID: 9154258551017587195, guid: 36be4a8292174fa4e832bff67200c43e,
-    type: 3}
-  connectFinger: 0
-  handSkeleton: {fileID: 991568997}
-  bezierMidDirection: {x: 1, y: 0, z: 0}
-  bezierMidDirectionAngle: 60
-  ShapeGameObjects: []
-  pinchMargin: {x: 0.02, y: 0.025}
-  pinchClickTime: 0.3
 --- !u!1 &448618349
 GameObject:
   m_ObjectHideFlags: 0
@@ -511,36 +489,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 448618351}
-  - component: {fileID: 448618350}
   m_Layer: 0
-  m_Name: PointerLeft
+  m_Name: Pointer Visual
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &448618350
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 448618349}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 67a480bb241e91d42b9aadc5479f3cb6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _raymarchRendererFeature: {fileID: 3592336366722439445, guid: c40be3174f62c4acf8c1216858c64956,
-    type: 2}
-  skeleton_L: {fileID: 1489637044}
-  skeleton_R: {fileID: 991568997}
-  cursor_L: {fileID: 776139780}
-  cursor_R: {fileID: 407633464}
-  pointerOffset_L: {x: 0.18, y: 0.14, z: 0.03}
-  pointerOffset_R: {x: -0.13, y: -0.06, z: -0.03}
-  palmOffset_L: {x: 0.13, y: 0.14, z: -0.03}
-  palmOffset_R: {x: 0, y: 0, z: 0}
 --- !u!4 &448618351
 Transform:
   m_ObjectHideFlags: 0
@@ -769,7 +724,6 @@ GameObject:
   - component: {fileID: 776139774}
   - component: {fileID: 776139779}
   - component: {fileID: 776139775}
-  - component: {fileID: 776139780}
   m_Layer: 0
   m_Name: Cursor left
   m_TagString: Untagged
@@ -840,27 +794,55 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &776139780
+--- !u!1 &796825911
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 796825913}
+  - component: {fileID: 796825912}
+  m_Layer: 0
+  m_Name: Cursor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &796825912
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 776139773}
+  m_GameObject: {fileID: 796825911}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9c09b8d442db4104ab7220bbb5799f9c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  linePrefab: {fileID: 9154258551017587195, guid: 36be4a8292174fa4e832bff67200c43e,
-    type: 3}
-  connectFinger: 0
-  handSkeleton: {fileID: 1489637044}
-  bezierMidDirection: {x: -1, y: 0, z: 0}
-  bezierMidDirectionAngle: 60
-  ShapeGameObjects: []
-  pinchMargin: {x: 0.02, y: 0.025}
-  pinchClickTime: 0.3
+  hand_L: {fileID: 0}
+  hand_R: {fileID: 0}
+  fingerTips_L: []
+  fingerTips_R: []
+  boneTipId: 1300000014000000150000001600000017000000
+--- !u!4 &796825913
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796825911}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &838053994
 GameObject:
   m_ObjectHideFlags: 0
@@ -2534,3 +2516,4 @@ SceneRoots:
   - {fileID: 105557144}
   - {fileID: 1746893763}
   - {fileID: 448618351}
+  - {fileID: 796825913}
