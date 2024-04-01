@@ -40,12 +40,14 @@ Material:
     m_Floats:
     - _Add: 0
     - _IOR: 0
-    - _LeftPalmView: 0
-    - _RightPalmView: 0
+    - _LeftHandPointerR: 0.03
+    - _LeftPalmView: 0.5176024
+    - _RightHandPointerR: 0.03
+    - _RightPalmView: 0.2964754
     m_Colors:
     - _HandPosition: {r: -0.13, g: -0.065, b: -0.03, a: 0}
-    - _LeftHandPointerDir: {r: 0.008780034, g: -0.0020766698, b: 0.028611159, a: 0}
-    - _LeftHandPointerPos: {r: -0.7053672, g: 1.2928584, b: -0.3310054, a: 0.013338774}
-    - _RightHandPointerDir: {r: 0.008961884, g: -0.002756608, b: 0.028497119, a: 0}
-    - _RightHandPointerPos: {r: -0.58314455, g: 1.2992549, b: -0.41134572, a: 0.016970048}
+    - _LeftHandPointerDir: {r: -0.0046786885, g: 0.023223585, b: 0.018405842, a: 0}
+    - _LeftHandPointerPos: {r: -0.49841228, g: 0.770316, b: 0.28034505, a: 0}
+    - _RightHandPointerDir: {r: -0.0046786885, g: 0.023223585, b: 0.018405842, a: 0}
+    - _RightHandPointerPos: {r: -0.25578934, g: 0.8707098, b: 0.25266227, a: 0}
   m_BuildTextureStacks: []
