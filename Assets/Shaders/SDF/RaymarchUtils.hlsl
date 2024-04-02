@@ -1,15 +1,12 @@
 #ifndef RAYMARCHUTILS_INCLUDED
 #define RAYMARCHUTILS_INCLUDED
 
-float smoothMax(float a, float b, float k) {
-    return log(exp(k * a) + exp(k * b)) / k;
-}
+///////////////////////
+// Primitives
+///////////////////////
 
-float smoothMin(float a, float b, float k) {
-    return -smoothMax(-a, -b, k);
-}
-
-float sdCylinder (float3 p, float3 a, float3 b, float ro, float ri) {
+float sdCylinder (float3 p, float3 a, float3 b, float ro, float ri) 
+{
     float3 ab = b - a;
     float3 ap = p - a;
     float t = dot(ap, ab) / dot (ab, ab);
@@ -46,7 +43,8 @@ float sdRoundCone(float3 p, float3 a, float3 b, float r1, float r2)
                         return (sqrt(x2*a2*il2)+y*rr)*il2 - r1;
 }
 
-float sdCapsule(float3 p, float3 a, float3 b, float r) {
+float sdCapsule(float3 p, float3 a, float3 b, float r) 
+{
     float3 ab = b - a;
     float3 ap = p - a;
     float t = dot(ap, ab) / dot (ab, ab);
@@ -55,12 +53,61 @@ float sdCapsule(float3 p, float3 a, float3 b, float r) {
     return length(p - c) - r;
 }
 
-float sdBox(float3 p, float3 c, float3 size, float3 r) {
+float sdBox(float3 p, float3 c, float3 size, float3 r) 
+{
     return length(max(abs(p - c) - size + r, 0)) - r;
 }
 
-float sdSphere(float3 p, float3 c, float r) {
+float sdSphere(float3 p, float3 c, float r) 
+{
     return length(p - c) - r;
+}
+
+///////////////////////
+// Boolean Operators
+///////////////////////
+
+float4 sdIntersect(float4 a, float4 b) 
+{
+    return a.w > b.w ? a : b;
+}
+
+float4 sdUnion(float4 a, float4 b) 
+{
+    return a.w < b.w ? a : b;
+}
+
+float4 sdDifference(float4 a, float4 b)
+{
+    return a.w > -b.w ? a : float4(b.rgb, -b.w);
+}
+
+/////////////////////////////
+// Smooth blending operators
+/////////////////////////////
+
+float4 sdSmoothIntersect(float4 a, float4 b, float k)
+{
+    float h = saturate(0.5 - 0.5*(a.w-b.w)/k);
+    float3 c = lerp(a.xyz, b.xyz, h);
+    float d = lerp(a.w, b.w, h) + k * h * (1. - h);
+    return float4(c,d);
+}
+
+float4 sdSmoothUnion(float4 a, float4 b, float k)
+{
+    float h = saturate(0.5 + 0.5*(a.w-b.w)/k);
+    float3 c = lerp(a.xyz, b.xyz, h);
+    float d = lerp(a.w, b.w, h) - k * h * (1. - h);
+    return float4(c,d);
+}
+
+float4 sdSmoothDifference(float4 a, float4 b, float k)
+{
+    float h = saturate(0.5 - 0.5*(a.w+b.w)/k);
+    float3 c = lerp(a.xyz, b.xyz, h);
+    float d = lerp(a.w, -b.w, h) + k * h * (1. - h);
+    return float4(c,d);
 }
 
 #endif
