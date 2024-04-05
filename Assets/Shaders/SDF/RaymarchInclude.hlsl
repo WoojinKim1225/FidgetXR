@@ -35,6 +35,8 @@ float4 GetDist(float3 p, SDFVars var) {
         )        
     );
     */
+    //float4 b = float4(0,0,1,sdSphere(p, float3(_SinTime.w,0,0), 0.1));
+    //float4 c = float4(0,1,0,sdSphere(p, float3(-_SinTime.w,0,0), 0.2));
     
     float4 b = float4(.5, .5, 1, lerp(
         sdRoundCone(p, var.p_L, var.p_L + var.d_L, var.r1_L, 0.005), 
@@ -47,8 +49,9 @@ float4 GetDist(float3 p, SDFVars var) {
         sdSphere(p, var.p_R, var.r1_R),
         var.t_R) 
     );
+    
 
-    float4 d = sdSmoothUnion(b,c, 0.05);
+    float4 d = sdSmoothUnion(b,c, 0.5);
     return d;
 }
 
