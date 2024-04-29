@@ -29,6 +29,8 @@ public class FingerInteractorMono : MonoBehaviour
     [SerializeField] private GameObject FingerBezierPrefab;
     [SerializeField] private FingerBezier[] FingerBeziers = new FingerBezier[5];
 
+    [SerializeField] private GameObject leftPalm, rightPalm;
+
     private EntityManager entityManager;
 
     void Awake()
@@ -47,6 +49,10 @@ public class FingerInteractorMono : MonoBehaviour
 
             entityManager.SetComponentData(fingers[i].e, new FingerReference{
                 Base = fingers[i].Base, Tip = fingers[i].Tip, ThumbTip = fingers[0].Tip,
+            });
+
+            entityManager.SetComponentData(fingers[i].e, new FingerInteractableReference{
+                InteractableObject = null
             });
 
             //entityManager.SetComponentData(fingers[i].e, new LineReference{Line = inst.GetComponent<BezierLine>()});
@@ -71,27 +77,40 @@ public class FingerInteractorMono : MonoBehaviour
 
     void Update()
     {
-        for(int i = 0; i < 5; i++) {
+        for (int i = 0; i < 5; i++) {
+            FingerBeziers[i].BezierLine.Visibility = FingerBeziers[i].Interactable != null;
             if (FingerBeziers[i].Interactable == null) continue;
 
+
+        }
+    }
+
+    public void OnEnter(GameObject interactableObject) {
+        if (interactableObject == leftPalm) return;
+        if (interactableObject == rightPalm) return;
+        for (int i = 0; i < 5; i++) {
+            entityManager.SetComponentData(fingers[i].e, new FingerInteractableReference{
+                InteractableObject = interactableObject
+            });
+            FingerBeziers[i].Interactable = interactableObject;
+            FingerBeziers[i].BezierLine.startTransformWS = fingers[i].Tip;
+
+            interactableObject.SendMessage("SetEndTransform", FingerBeziers[i].BezierLine);
             
         }
     }
 
-    public void OnEnter(GameObject obj) {
-        for (int i = 0; i < 5; i++) {
-            entityManager.SetComponentData(fingers[i].e, new FingerInteractableReference{
-                InteractableObject = obj
-            });
-        }
-    }
-
-    public void OnExit(GameObject obj) {
+    public void OnExit(GameObject interactableObject) {
+        if (interactableObject == leftPalm) return;
+        if (interactableObject == rightPalm) return;
         for (int i = 0; i < 5; i++) {
             //if (entityManager.GetComponentData<FingerInteractableReference>(fingers[i].e).Object != obj) continue;
             entityManager.SetComponentData(fingers[i].e, new FingerInteractableReference{
                 InteractableObject = null
             });
+            FingerBeziers[i].Interactable = null;
+            FingerBeziers[i].BezierLine.startTransformWS = null;
+            FingerBeziers[i].BezierLine.endTransformWS = null;
         }
     }
 

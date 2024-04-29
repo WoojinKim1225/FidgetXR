@@ -9,11 +9,7 @@ public class BezierLine : MonoBehaviour
     [SerializeField] private Vector3 _startPoint, _endPoint, _midPoint;
     private Vector3 _midPointB;
 
-    public Vector3 StartPoint{set => _startPoint = value; }
-    public Vector3 EndPoint{set => _endPoint = value; }
-    public Vector3 MidPoint{set => _midPoint = value; }
-
-    public Transform endTransformWS;
+    public Transform startTransformWS, endTransformWS;
 
     public int segCount;
 
@@ -27,7 +23,11 @@ public class BezierLine : MonoBehaviour
     }
     
     private void Update() {
-        if (endTransformWS != null) _endPoint = endTransformWS.position;
+        if (endTransformWS != null) {
+            _startPoint = startTransformWS.position;
+            _endPoint = endTransformWS.position;
+            _midPoint = startTransformWS.position + startTransformWS.forward * Vector3.Magnitude(endTransformWS.position - startTransformWS.position) * 0.5f;
+        }
 
         if (!lineRenderer.isVisible) return;
         if (segCount != lineRenderer.positionCount) {

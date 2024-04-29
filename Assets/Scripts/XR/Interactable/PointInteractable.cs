@@ -40,5 +40,9 @@ public class PointInteractable : MonoBehaviour
         pointInteractable[3].name = "Ring";
         pointInteractable[4].name = "Pinky";
     }
+
+    void SetEndTransform(BezierLine bezierLine) {
+        bezierLine.endTransformWS = this.transform;
+    }
     
 }

@@ -161,7 +161,7 @@ PrefabInstance:
     - target: {fileID: 431247075847058747, guid: 56186ccf27ad7864681108ed88349071,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 431247075847058747, guid: 56186ccf27ad7864681108ed88349071,
         type: 3}
@@ -522,7 +522,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1395590243672757157}
         m_TargetAssemblyTypeName: FingerInteractorMono, Assembly-CSharp
-        m_MethodName: UpdateVisibilaty
+        m_MethodName: UpdateFingerVisibility
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -537,7 +537,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1395590243672757157}
         m_TargetAssemblyTypeName: FingerInteractorMono, Assembly-CSharp
-        m_MethodName: UpdateVisibilaty
+        m_MethodName: UpdateFingerVisibility
         m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -668,24 +668,26 @@ MonoBehaviour:
   FingerBeziers:
   - name: Thumb
     Instance: {fileID: 0}
-    LineRenderer: {fileID: 0}
     BezierLine: {fileID: 0}
+    Interactable: {fileID: 0}
   - name: Index
     Instance: {fileID: 0}
-    LineRenderer: {fileID: 0}
     BezierLine: {fileID: 0}
+    Interactable: {fileID: 0}
   - name: Middle
     Instance: {fileID: 0}
-    LineRenderer: {fileID: 0}
     BezierLine: {fileID: 0}
+    Interactable: {fileID: 0}
   - name: Ring
     Instance: {fileID: 0}
-    LineRenderer: {fileID: 0}
     BezierLine: {fileID: 0}
+    Interactable: {fileID: 0}
   - name: Pinky
     Instance: {fileID: 0}
-    LineRenderer: {fileID: 0}
     BezierLine: {fileID: 0}
+    Interactable: {fileID: 0}
+  leftPalm: {fileID: 0}
+  rightPalm: {fileID: 2277186532339042092}
 --- !u!4 &8046681832506733808 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8494328768516585249, guid: 56186ccf27ad7864681108ed88349071,
