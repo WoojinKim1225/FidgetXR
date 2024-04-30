@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class LineInteractable : MonoBehaviour
 {
+    public LineRenderer lineVisualizer;
+
     public enum ELineType {
         Segment, Bezier
     }
+    public ELineType lineType = ELineType.Segment;
 
     public FingerInteractable[] lineInteractable = new FingerInteractable[5];
 
@@ -25,7 +28,6 @@ public class LineInteractable : MonoBehaviour
         }
     }
 
-    public ELineType lineType = ELineType.Segment;
 
     private float? _value;
     public float NumValue => _value.GetValueOrDefault();
@@ -34,12 +36,18 @@ public class LineInteractable : MonoBehaviour
     public bool isQuantized = false;
     public float quantizeStep;
 
-    private Vector3 _startPositionOS, _endPositionOS;
+    [SerializeField] private Vector3 _startPositionOS, _endPositionOS;
 
     private bool _isSegmentGrabPositionKnown = false;
     private bool _isSegmentGrabSideStart = false;
+    [SerializeField] private bool _updatePosition;
 
-    // Segment
+    void Update()
+    {
+        if (!_updatePosition) return;
+        lineVisualizer.SetPosition(0, _startPositionOS);
+        lineVisualizer.SetPosition(1, _endPositionOS);
+    }
 
 
     public float GetRelativePosition01(Vector3 pos) {
