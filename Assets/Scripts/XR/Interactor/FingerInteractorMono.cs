@@ -95,7 +95,7 @@ public class FingerInteractorMono : MonoBehaviour
             FingerBeziers[i].Interactable = interactableObject;
             FingerBeziers[i].BezierLine.startTransformWS = fingers[i].Tip;
 
-            interactableObject.SendMessage("SetEndTransform", FingerBeziers[i].BezierLine);
+            interactableObject.SendMessage("SetEndTransformEndBezier", FingerBeziers[i].BezierLine);
             
         }
     }
