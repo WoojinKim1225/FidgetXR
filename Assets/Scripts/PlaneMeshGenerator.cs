@@ -2,7 +2,7 @@ using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
 [ExecuteInEditMode]
-public class MeshGenerator : MonoBehaviour
+public class PlaneMeshGenerator : MonoBehaviour
 {
     private MeshFilter meshFilter;
     [SerializeField] private Mesh mesh;
