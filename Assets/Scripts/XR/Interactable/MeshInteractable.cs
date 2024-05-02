@@ -5,10 +5,8 @@ using UnityEngine;
 
 public class MeshInteractable : MonoBehaviour
 {
-    public PlaneMeshGenerator meshGenerator;
-    private Mesh mesh;
-
-
+    [SerializeField] private PlaneMeshManager _meshManager;
+    private Mesh _mesh;
 
     public Vector2 size;
 
@@ -17,24 +15,28 @@ public class MeshInteractable : MonoBehaviour
     }
     public EMeshType meshType = EMeshType.Flat;
 
-    public float curvature = 0.25f;
-    public float resolution = 0.01f;
+    [SerializeField] private float curvature = 0.25f;
+    [SerializeField] private float resolution = 0.01f;
 
-    //public Transform pointer;
+    public Transform pointer;
 
+    public Vector3 pointerOrigin => pointer.position;
+    public Vector3 pointerDirection => pointer.forward;
     
-    
-    Vector3? GetHitPointOS(Vector3 origin, Vector3 direction) {
+    /*
+    Vector3 GetHitPointOS(Vector3 origin, Vector3 direction) {
+        var invalidPosition = new Vector3(float.NaN, float.NaN, float.NaN);
         Vector3 originOS = transform.InverseTransformPoint(origin);
         Vector3 directionOS = transform.InverseTransformDirection(direction).normalized;
+        float radius = 1f / curvature;
+
         switch (meshType) {
             case EMeshType.Flat:
                 if (originOS.z * directionOS.z < 0)
                     return originOS - directionOS * originOS.z / directionOS.z;
                 else
-                    return null;
+                    return invalidPosition;
             case EMeshType.Curved:
-                float radius = 1f / curvature;
                 Vector3 horizontalDirOS = Vector3.Normalize(directionOS - Vector3.up * directionOS.y);
                 Vector3 horizontalOriginOS = originOS - Vector3.up * originOS.y;
                 float tan = directionOS.y/ Mathf.Sqrt(directionOS.x * directionOS.x + directionOS.z * directionOS.z);
@@ -44,19 +46,16 @@ public class MeshInteractable : MonoBehaviour
             case EMeshType.Spherical:
                 break;
         }
-        return Vector3.zero;
+        return invalidPosition;
     }
+    */
     
-    private void Start() {
-        
-    }
 
     private void Update() {
-        meshGenerator.size = size;
-        meshGenerator.curvature = meshType == EMeshType.Flat ? 0f : curvature;
-        meshGenerator.resolution = resolution;
+        _meshManager.size = size;
+        _meshManager.curvature = meshType == EMeshType.Flat ? 0f : curvature;
+        _meshManager.resolution = resolution;
 
-        // Vector3? hitPosOS = GetHitPointOS(pointer.position, pointer.forward);
     }
     
     

@@ -1,8 +1,8 @@
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-[ExecuteInEditMode]
-public class PlaneMeshGenerator : MonoBehaviour
+[ExecuteInEditMode ]
+public class PlaneMeshManager : MonoBehaviour
 {
     private MeshFilter meshFilter;
     [SerializeField] private Mesh mesh;
