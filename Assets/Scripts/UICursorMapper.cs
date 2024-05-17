@@ -5,7 +5,7 @@ using UnityEngine.UIElements;
 
 public class UICursorMapper : MonoBehaviour
 {
-    public PlaneMeshManager planeMeshManager;
+    public MeshVisualizer meshVisualizer;
     public MeshInteractable meshInteractable;
     UIDocument document;
 
@@ -19,7 +19,7 @@ public class UICursorMapper : MonoBehaviour
 
     void Awake()
     {
-        planeMeshManager = GetComponent<PlaneMeshManager>();
+        meshVisualizer = GetComponent<MeshVisualizer>();
     }
     
     private void OnEnable() {
@@ -38,18 +38,21 @@ public class UICursorMapper : MonoBehaviour
 
         if (originOS.z * directionOS.z < 0) {
             Vector3 hitOS = originOS - directionOS * originOS.z / directionOS.z;
+            Vector3 documentSize = new Vector2(document.panelSettings.targetTexture.width, document.panelSettings.targetTexture.height);
             
-            pixelUV = (new Vector2(hitOS.x, hitOS.y) + planeMeshManager.size * 0.5f) / planeMeshManager.size;
-            pixelUV.x = Mathf.Clamp01(pixelUV.x) * document.panelSettings.targetTexture.width;
-            pixelUV.y = Mathf.Clamp01(1 - pixelUV.y) * document.panelSettings.targetTexture.height;
+            Vector2 uv = new Vector2(hitOS.x, hitOS.y) / meshVisualizer.size + Vector2.one * 0.5f;
 
-            dampedPixelUV = dampedHarmonic(pixelUV, c, dampedPixelUV);
+            pixelUV = (Vector2.up + uv * new Vector2(1f, -1f)) * documentSize;
 
+            // pixelUV.x = Mathf.Clamp01(pixelUV.x) * document.panelSettings.targetTexture.width;
+            // pixelUV.y = Mathf.Clamp01(1 - pixelUV.y) * document.panelSettings.targetTexture.height;
+
+            //dampedPixelUV = dampedHarmonic(pixelUV, c, dampedPixelUV);
 
             if (cursor != null) {
                 cursor.visible = true;
-                cursor.style.left = dampedPixelUV.x;
-                cursor.style.top = dampedPixelUV.y;
+                cursor.style.left = pixelUV.x;
+                cursor.style.top = pixelUV.y;
             }
         } else {
             if (cursor != null) {
@@ -62,17 +65,4 @@ public class UICursorMapper : MonoBehaviour
         cursor.visible = b;
     }
 
-    private Vector2 dampedHarmonic(Vector2 target, float c, Vector2 pos)
-    {
-        // Calculate the difference between the current position and the target position
-        Vector2 difference = target - pos;
-
-        // Apply damping
-        Vector2 dampedDifference = difference * Mathf.Exp(-c * Time.deltaTime);
-
-        // Update position
-        Vector2 newPos = pos + dampedDifference;
-
-        return newPos;
-    }
 }

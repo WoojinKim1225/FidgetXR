@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class MeshInteractable : MonoBehaviour
 {
-    [SerializeField] private PlaneMeshManager _meshManager;
+    [SerializeField] private MeshVisualizer _meshManager;
     private Mesh _mesh;
 
     public Vector2 size;

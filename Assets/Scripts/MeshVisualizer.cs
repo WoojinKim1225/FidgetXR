@@ -1,8 +1,8 @@
 using UnityEngine;
 
 [RequireComponent(typeof(MeshFilter), typeof(MeshRenderer))]
-[ExecuteInEditMode ]
-public class PlaneMeshManager : MonoBehaviour
+[ExecuteInEditMode]
+public class MeshVisualizer : MonoBehaviour
 {
     private MeshFilter meshFilter;
     [SerializeField] private Mesh mesh;
@@ -16,8 +16,9 @@ public class PlaneMeshManager : MonoBehaviour
 
     void Awake()
     {
+        Destroy(mesh);
         meshFilter = GetComponent<MeshFilter>();
-        mesh = new Mesh();
+        InitMesh();
     }
 
     void Update()
@@ -32,7 +33,7 @@ public class PlaneMeshManager : MonoBehaviour
         if (size.x <= 0 || size.y <= 0) return;
         if (resolution <= 0) return;
 
-        if (mesh == null) mesh = new Mesh();
+        InitMesh();
 
         if (curvature != 0f)
             mesh = GenerateCurvedMesh();
@@ -104,5 +105,12 @@ public class PlaneMeshManager : MonoBehaviour
         
     }
 
-    
+    private void InitMesh() {
+        if (mesh == null) {
+            mesh = new Mesh
+            {
+                name = "meshPlane"
+            };
+        }
+    }
 }
