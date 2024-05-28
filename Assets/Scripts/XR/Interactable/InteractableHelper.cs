@@ -10,7 +10,13 @@ namespace EventManager
 
     [System.Serializable]
     public struct StatefulAxisUnityEvent {
-        public UnityEvent OnValueChange, 
+        public UnityEvent OnValueChange;
+    }
+
+    [System.Serializable]
+    public struct StatefulDirectionUnityEvent {
+        public Vector2 axis;
+        public StatefulButtonUnityEvent button;
     }
 
     [System.Serializable]
