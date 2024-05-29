@@ -9,20 +9,20 @@ public class IPDManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        XRDisplaySubsystem displaySubSystem = GetXRDisplaySubsystem();
-        if (displaySubSystem == null || !displaySubSystem.running) return;
+        //XRDisplaySubsystem displaySubSystem = GetXRDisplaySubsystem();
+        ///if (displaySubSystem == null || !displaySubSystem.running) return;
 
-        float ipd = GetIPD(out Vector3 leftEyePos, out Vector3 rightEyePos);
+        //float ipd = GetIPD(out Vector3 leftEyePos, out Vector3 rightEyePos);
 
-        material.SetFloat("_IPD", ipd);
-        material.SetVector("_LeftEyePos", leftEyePos);
-        material.SetVector("_RightEyePos", rightEyePos);
+        //material.SetFloat("_IPD", ipd);
+        //material.SetVector("_LeftEyePos", leftEyePos);
+        //material.SetVector("_RightEyePos", rightEyePos);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        Debug.Log(Camera.main.stereoSeparation);
     }
 
     XRDisplaySubsystem GetXRDisplaySubsystem()
