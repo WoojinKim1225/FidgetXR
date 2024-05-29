@@ -24,7 +24,7 @@ namespace InteractableHelper
 
     [System.Serializable]
     public struct StatefulPivotEvent {
-        //public 
+        public Vector3 pivot;
         public StatefulButtonEvent button;
     }
 
