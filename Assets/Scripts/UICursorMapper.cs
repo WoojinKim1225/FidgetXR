@@ -40,7 +40,7 @@ public class UICursorMapper : MonoBehaviour
             Vector3 hitOS = originOS - directionOS * originOS.z / directionOS.z;
             Vector3 documentSize = new Vector2(document.panelSettings.targetTexture.width, document.panelSettings.targetTexture.height);
             
-            Vector2 uv = new Vector2(hitOS.x, hitOS.y) / meshVisualizer.size.Value + Vector2.one * 0.5f;
+            Vector2 uv = new Vector2(hitOS.x, hitOS.y) / meshVisualizer.size + Vector2.one * 0.5f;
 
             pixelUV = (Vector2.up + uv * new Vector2(1f, -1f)) * documentSize;
 

@@ -1,6 +1,8 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-[ExecuteInEditMode]
+
 public class MeshInteractable : MonoBehaviour
 {
     [SerializeField] private MeshVisualizer _meshManager;
@@ -48,10 +50,14 @@ public class MeshInteractable : MonoBehaviour
     }
     */
     
+
     private void Update() {
-        _meshManager.size.Value = size;
-        _meshManager.curvature.Value = meshType == EMeshType.Flat ? 0f : curvature;
-        _meshManager.resolution.Value = resolution;
+        _meshManager.size = size;
+        _meshManager.curvature = meshType == EMeshType.Flat ? 0f : curvature;
+        _meshManager.resolution = resolution;
 
     }
+    
+    
+    
 }
