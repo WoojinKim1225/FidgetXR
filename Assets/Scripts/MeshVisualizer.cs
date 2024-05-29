@@ -7,35 +7,30 @@ public class MeshVisualizer : MonoBehaviour
     private MeshFilter meshFilter;
     [SerializeField] private Mesh mesh;
 
-    public Vector2 size;
-    private Vector2 _sizeOld;
-    public float curvature = 0.25f;
-    private float _curvatureOld;
-    public float resolution = 0.01f;
-    private float _resolutionOld;
+    public Stateful<Vector2> size;
+    public Stateful<float> curvature;
+    public Stateful<float> resolution;
 
     void Awake()
     {
-        DestroyImmediate(mesh);
+        Destroy(mesh);
         meshFilter = GetComponent<MeshFilter>();
+        size = new Stateful<Vector2>(Vector2.zero);
+        curvature = new Stateful<float>(0);
+        resolution = new Stateful<float>(1);
         InitMesh();
     }
 
     void Update()
     {
-        if (size == _sizeOld && curvature == _curvatureOld && resolution == _resolutionOld) return;
-        _sizeOld = size;
-        _curvatureOld = curvature;
-        _resolutionOld = resolution;
+        if (size.Value.x <= 0 || size.Value.y <= 0) return;
+        if (resolution.Value <= 0) return;
 
-
-        Debug.Log("Update...");
-        if (size.x <= 0 || size.y <= 0) return;
-        if (resolution <= 0) return;
+        if (!size.IsChanged && !curvature.IsChanged && !resolution.IsChanged) return;
 
         InitMesh();
 
-        if (curvature != 0f)
+        if (curvature.Value != 0f)
             mesh = GenerateCurvedMesh();
         else
             mesh = GenerateFlatMesh();
@@ -45,22 +40,22 @@ public class MeshVisualizer : MonoBehaviour
     }
 
     private Mesh GenerateCurvedMesh() {
-        float curvatureRadius = 1f / curvature;
+        float curvatureRadius = 1f / curvature.Value;
 
-        Vector3[] verts = new Vector3[(Mathf.CeilToInt(size.x / resolution) + 1) * 2];
-        Vector2[] uvs = new Vector2[(Mathf.CeilToInt(size.x / resolution) + 1) * 2];
-        int[] tris = new int[Mathf.CeilToInt(size.x / resolution) * 6];
-        float maxAngle = (Mathf.CeilToInt(size.x / resolution) - 1) * resolution * curvature;
+        Vector3[] verts = new Vector3[(Mathf.CeilToInt(size.Value.x / resolution.Value) + 1) * 2];
+        Vector2[] uvs = new Vector2[(Mathf.CeilToInt(size.Value.x / resolution.Value) + 1) * 2];
+        int[] tris = new int[Mathf.CeilToInt(size.Value.x / resolution.Value) * 6];
+        float maxAngle = (Mathf.CeilToInt(size.Value.x / resolution.Value) - 1) * resolution.Value * curvature.Value;
 
-        for (int i = 0; i < Mathf.CeilToInt(size.x / resolution) + 1; i++) {
-            float angle = i * resolution * curvature - maxAngle / 2f;
-            verts[2 * i] = new Vector3(curvatureRadius * Mathf.Sin(angle), size.y * (-0.5f), -curvatureRadius * (1 - Mathf.Cos(angle)));
-            verts[2 * i + 1] = new Vector3(curvatureRadius * Mathf.Sin(angle), size.y * 0.5f, -curvatureRadius * (1 - Mathf.Cos(angle)));
-            uvs[2 * i] = Vector2.right * (i / (Mathf.CeilToInt(size.x / resolution) - 1.0f));
-            uvs[2 * i + 1] = Vector2.right * (i / (Mathf.CeilToInt(size.x / resolution) - 1.0f)) + Vector2.up;
+        for (int i = 0; i < Mathf.CeilToInt(size.Value.x / resolution.Value) + 1; i++) {
+            float angle = i * resolution.Value * curvature.Value - maxAngle / 2f;
+            verts[2 * i] = new Vector3(curvatureRadius * Mathf.Sin(angle), size.Value.y * (-0.5f), -curvatureRadius * (1 - Mathf.Cos(angle)));
+            verts[2 * i + 1] = new Vector3(curvatureRadius * Mathf.Sin(angle), size.Value.y * 0.5f, -curvatureRadius * (1 - Mathf.Cos(angle)));
+            uvs[2 * i] = Vector2.right * (i / (Mathf.CeilToInt(size.Value.x / resolution.Value) - 1.0f));
+            uvs[2 * i + 1] = Vector2.right * (i / (Mathf.CeilToInt(size.Value.x / resolution.Value) - 1.0f)) + Vector2.up;
         }
 
-        for (int i = 0; i < Mathf.CeilToInt(size.x / resolution) - 1; i++) {
+        for (int i = 0; i < Mathf.CeilToInt(size.Value.x / resolution.Value) - 1; i++) {
             tris[i * 6] = 2 + 2 * i;
             tris[i * 6 + 1] = 2 * i;
             tris[i * 6 + 2] = 1 + 2 * i;
@@ -80,10 +75,10 @@ public class MeshVisualizer : MonoBehaviour
 
     private Mesh GenerateFlatMesh() {
         Vector3[] verts = new Vector3[4] {
-            Vector3.left * size.x * 0.5f + Vector3.down * size.y * 0.5f, 
-            Vector3.left * size.x * 0.5f + Vector3.up * size.y * 0.5f, 
-            Vector3.right * size.x * 0.5f + Vector3.down * size.y * 0.5f, 
-            Vector3.right * size.x * 0.5f + Vector3.up * size.y * 0.5f
+            Vector3.left * size.Value.x * 0.5f + Vector3.down * size.Value.y * 0.5f, 
+            Vector3.left * size.Value.x * 0.5f + Vector3.up * size.Value.y * 0.5f, 
+            Vector3.right * size.Value.x * 0.5f + Vector3.down * size.Value.y * 0.5f, 
+            Vector3.right * size.Value.x * 0.5f + Vector3.up * size.Value.y * 0.5f
         };
         Vector2[] uvs = new Vector2[4] {
             Vector2.zero,
@@ -111,6 +106,8 @@ public class MeshVisualizer : MonoBehaviour
             {
                 name = "meshPlane"
             };
+        } else {
+            mesh.name = "meshPlane";
         }
     }
 }

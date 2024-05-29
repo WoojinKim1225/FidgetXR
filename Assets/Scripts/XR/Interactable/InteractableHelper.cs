@@ -1,22 +1,31 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace EventManager
+namespace InteractableHelper
 {
     [System.Serializable]
-    public struct StatefulButtonUnityEvent {
+    public struct StatefulButtonEvent {
         public UnityEvent OnEnter, OnStay, OnExit, OnClick;
     }
 
     [System.Serializable]
-    public struct StatefulAxisUnityEvent {
+    public struct StatefulAxisEvent {
+        public float value;
+        public StatefulButtonEvent button;
         public UnityEvent OnValueChange;
     }
 
     [System.Serializable]
-    public struct StatefulDirectionUnityEvent {
-        public Vector2 axis;
-        public StatefulButtonUnityEvent button;
+    public struct StatefulVector2Event {
+        public Vector2 value;
+        public StatefulButtonEvent button;
+        public UnityEvent OnValueChange;
+    }
+
+    [System.Serializable]
+    public struct StatefulPivotEvent {
+        //public 
+        public StatefulButtonEvent button;
     }
 
     [System.Serializable]
@@ -25,24 +34,15 @@ namespace EventManager
         public string name;
 
         // Curling One Finger
-        public StatefulButtonUnityEvent Curl;
+        public StatefulButtonEvent Curl;
 
         // Pinching Corresponding Finger with Thumb;
-        public StatefulButtonUnityEvent Pinch;
+        public StatefulButtonEvent Pinch;
 
         // Tip Distance From Object;
-        public StatefulButtonUnityEvent Touch;
+        public StatefulButtonEvent Touch;
         
         // Tapping Finger Base with Thumb;
-        public StatefulButtonUnityEvent Tap;
-    }
-
-    [System.Serializable]
-    public struct TangibleInteractable {
-        [HideInInspector]
-        public string name;
-
-        public StatefulAxisUnityEvent pitch, yaw, roll;
-        public StatefulAxisUnityEvent sway, heave, surge;
+        public StatefulButtonEvent Tap;
     }
 }
