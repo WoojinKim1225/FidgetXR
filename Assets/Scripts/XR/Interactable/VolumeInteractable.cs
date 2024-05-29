@@ -46,14 +46,6 @@ public class VolumeInteractable : MonoBehaviour
         }
     }
 
-    /*
-    void OnDrawGizmos()
-    {
-        for (int i = 0; i < pivots.Count; i++) {
-            Debug.DrawRay(transform.position, transform.TransformDirection(pivots[i].pivot) * 0.2f, Dir2Color(pivots[i].pivot));
-        }
-    }
-    */
     private Color Dir2Color(Vector3 d) {
         Vector3 n = (d.normalized + Vector3.one) * 0.5f;
         Color c = new Color(n.x, n.y, n.z, 1f); 
