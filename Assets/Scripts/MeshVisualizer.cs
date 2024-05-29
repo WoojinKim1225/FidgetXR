@@ -16,7 +16,7 @@ public class MeshVisualizer : MonoBehaviour
 
     void Awake()
     {
-        Destroy(mesh);
+        DestroyImmediate(mesh);
         meshFilter = GetComponent<MeshFilter>();
         InitMesh();
     }
