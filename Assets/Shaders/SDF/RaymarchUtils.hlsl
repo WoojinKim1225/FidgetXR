@@ -53,7 +53,7 @@ float sdCapsule(float3 p, float3 a, float3 b, float r)
     return length(p - c) - r;
 }
 
-float sdBox(float3 p, float3 c, float3 size, float3 r) 
+float sdBox(float3 p, float3 c, float3 size, float r) 
 {
     return length(max(abs(p - c) - size + r, 0)) - r;
 }

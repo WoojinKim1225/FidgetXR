@@ -65,8 +65,6 @@ float3 GetNormal(float3 p) {
 }
 
 void Raymarch_half(float3 ro, float3 rd, float3 camForward, float depth, out half3 p, out half3 n, out half3 c, out half a) {
-
-    
     half dO = 0;
     half4 dS;
     for (int i = 0; i < MAX_STEPS; i++) {
@@ -86,11 +84,26 @@ void Raymarch_half(float3 ro, float3 rd, float3 camForward, float depth, out hal
         a = 1;
         n = GetNormal(p);
     } else {
-        p = half3(0,0,0);
+        p = 0;
         a = 0;
-        c = half3(0,0,0);
-        n = half3(0,0,0);
+        c = 0;
+        n = 0;
     }
+}
+
+void GetShadows_float(float3 pos, out float a) {
+#ifdef SHADERGRAPH_PREVIEW
+    a = 0.5;
+#else
+#if SHADOWS_SCREEN
+    float4 clipPos = TransformWorldToHClip(pos);
+    float4 shadowCoord = ComputeScreenPos(clipPos);
+#else
+    float4 shadowCoord = TransformWorldToShadowCoord(pos);
+#endif
+    Light light = GetMainLight(shadowCoord);
+    a = light.shadowAttenuation;
+#endif
 }
 
 
