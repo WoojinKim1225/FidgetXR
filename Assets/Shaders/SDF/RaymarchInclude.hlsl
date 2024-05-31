@@ -64,14 +64,14 @@ float3 GetNormal(float3 p) {
     return normalize(n);
 }
 
-void Raymarch_half(float3 ro, float3 rd, float3 camForward, float depth, out half3 p, out half3 n, out half3 c, out half a) {
-    half dO = 0;
-    half4 dS;
+void Raymarch_float(float3 ro, float3 rd, float3 camForward, float depth, out float3 p, out float3 n, out float3 c, out float a) {
+    float dO = 0;
+    float4 dS;
     for (int i = 0; i < MAX_STEPS; i++) {
         if (dO > MAX_DIST) {
             break;
         }
-        half3 p = ro + dO * rd;
+        float3 p = ro + dO * rd;
         dS = GetDist(p);
         if (dS.w < SURF_DIST) {
             c = dS.xyz;
@@ -90,6 +90,9 @@ void Raymarch_half(float3 ro, float3 rd, float3 camForward, float depth, out hal
         n = 0;
     }
 }
+
+#pragma multi_compile _ _MAIN_LIGHT_SHADOWS
+#pragma multi_compile _ _MAIN_LIGHT_SHADOWS_CASCADE
 
 void GetShadows_float(float3 pos, out float a) {
 #ifdef SHADERGRAPH_PREVIEW
