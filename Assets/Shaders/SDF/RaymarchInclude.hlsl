@@ -8,18 +8,12 @@
 #define SURF_DIST 1e-3
 
 struct SDFVars {
-    float3 p_L;
-    float3 d_L;
-    float r1_L;
-    float3 p_R;
-    float3 d_R;
-    float r1_R;
-    float t_L;
-    float t_R;
+    float3 position;
+    float radius;
 };
 
 
-float4 GetDist(float3 p) {
+float4 GetDist(float3 p, SDFVars s) {
     //float d = smoothMin(sphereSDF(p, var.p1.xyz, 0.03), sphereSDF(p, var.p2.xyz, 0.03), 100);
     /*
     float d = min(
@@ -54,17 +48,22 @@ float4 GetDist(float3 p) {
     float4 d = sdSmoothUnion(b,c, 0.5);
     return d;
     */
-    return float4(1, 1, 1, sdSphere(p, float3(0,1.2,1), 0.1));
+    //return float4(1, 1, 1, sdSphere(p, s.position, s.radius));
+    return float4(1,1,1, sdRoundCone(p, s.position, s.position + float3(0,0,0.015), s.radius, 0.01));
 }
 
-float3 GetNormal(float3 p) {
+float3 GetNormal(float3 p, SDFVars s) {
     float2 e = float2(1e-2, 0);
-    float3 n = GetDist(p).w - float3(GetDist(p + e.xyy).w, GetDist(p + e.yxy).w, GetDist(p + e.yyx).w);
+    float3 n = GetDist(p, s).w - float3(GetDist(p + e.xyy, s).w, GetDist(p + e.yxy, s).w, GetDist(p + e.yyx, s).w);
 
     return normalize(n);
 }
 
-void Raymarch_float(float3 ro, float3 rd, float3 camForward, float depth, out float3 p, out float3 n, out float3 c, out float a) {
+void Raymarch_float(float3 ro, float3 rd, float3 camForward, float depth, float3 position, float radius, out float3 p, out float3 n, out float3 c, out float a) {
+    SDFVars sVars;
+    sVars.position = position;
+    sVars.radius = radius;
+
     float dO = 0;
     float4 dS;
     for (int i = 0; i < MAX_STEPS; i++) {
@@ -72,7 +71,7 @@ void Raymarch_float(float3 ro, float3 rd, float3 camForward, float depth, out fl
             break;
         }
         float3 p = ro + dO * rd;
-        dS = GetDist(p);
+        dS = GetDist(p, sVars);
         if (dS.w < SURF_DIST) {
             c = dS.xyz;
             break;
@@ -82,7 +81,7 @@ void Raymarch_float(float3 ro, float3 rd, float3 camForward, float depth, out fl
     if (dO < MAX_DIST && dO * dot(rd, camForward) < depth) {
         p.xyz = ro + rd * dO;
         a = 1;
-        n = GetNormal(p);
+        n = GetNormal(p, sVars);
     } else {
         p = 0;
         a = 0;

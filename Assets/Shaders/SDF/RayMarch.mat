@@ -46,9 +46,11 @@ Material:
     - _IPD: 0.022
     - _MAIN_LIGHT_SHADOWS: 1
     - _MAIN_LIGHT_SHADOWS_CASCADE: 1
+    - _Radius: 0.02
     - _SHADOWS_SOFT: 1
     - _UNIVERSAL_LIGHTING_INCLUDED: 1
     m_Colors:
     - _LeftEyePos: {r: 0, g: 0, b: 0, a: 0}
+    - _Position: {r: 0.153052, g: 0.89601684, b: 0.61195934, a: 0}
     - _RightEyePos: {r: 0, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -154,4 +154,4 @@ MonoBehaviour:
   _midPoint: {x: 0, y: 0, z: 1}
   startTransformWS: {fileID: 0}
   endTransformWS: {fileID: 0}
-  segCount: 20
+  segCount: 10
