@@ -122,6 +122,12 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!4 &146899701 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6060941146128934907, guid: d4f413fe8a1aa484ca6464007ecfc688,
+    type: 3}
+  m_PrefabInstance: {fileID: 2779793515125398756}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &148611272
 GameObject:
   m_ObjectHideFlags: 0
@@ -634,6 +640,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 2779793515125398756}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &368619549 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2602524203485355341, guid: d4f413fe8a1aa484ca6464007ecfc688,
+    type: 3}
+  m_PrefabInstance: {fileID: 2779793515125398756}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &394566854
 GameObject:
   m_ObjectHideFlags: 0
@@ -949,6 +961,12 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5080015512058765869}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1141674257 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5488382713058556690, guid: d4f413fe8a1aa484ca6464007ecfc688,
+    type: 3}
+  m_PrefabInstance: {fileID: 2779793515125398756}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1342955045
 GameObject:
   m_ObjectHideFlags: 0
@@ -979,10 +997,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   SDFMaterial: {fileID: 2100000, guid: 876975883cc79e2478162181ff6c6a8b, type: 2}
-  positionWS: {x: 0.153052, y: 0.89601684, z: 0.61195934}
-  radius: 0.02
-  thumbTransform: {fileID: 1588493815}
-  indexTransform: {fileID: 2023898410}
+  interactionMode: 1
+  position: {x: 0.153052, y: 0.89601684, z: 0.61195934}
+  direction: {x: 0, y: 0, z: 0.025}
+  radiusStart: 0.02
+  thumbTrs: {fileID: 1588493815}
+  indexTrs: {fileID: 2023898410}
+  middleTrs: {fileID: 368619549}
+  ringTrs: {fileID: 146899701}
+  pinkyTrs: {fileID: 1141674257}
 --- !u!4 &1342955047
 Transform:
   m_ObjectHideFlags: 0
