@@ -274,22 +274,6 @@ PrefabInstance:
         type: 3}
       insertIndex: -1
       addedObject: {fileID: 4070177458504176802}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: bf7151579c38e2a44be94ba8773876c1,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 8345905064245155416}
-    - targetCorrespondingSourceObject: {fileID: -5735284792742419562, guid: bf7151579c38e2a44be94ba8773876c1,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1444675748298106551}
-    - targetCorrespondingSourceObject: {fileID: -5735284792742419562, guid: bf7151579c38e2a44be94ba8773876c1,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 4365507663174464771}
-    - targetCorrespondingSourceObject: {fileID: -5735284792742419562, guid: bf7151579c38e2a44be94ba8773876c1,
-        type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 7465094680106701269}
   m_SourcePrefab: {fileID: 100100000, guid: bf7151579c38e2a44be94ba8773876c1, type: 3}
 --- !u!4 &29350818995901310 stripped
 Transform:
@@ -393,73 +377,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 7077322923184183868}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &5935638127216179626 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -5735284792742419562, guid: bf7151579c38e2a44be94ba8773876c1,
-    type: 3}
-  m_PrefabInstance: {fileID: 7077322923184183868}
-  m_PrefabAsset: {fileID: 0}
---- !u!135 &1444675748298106551
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5935638127216179626}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 1
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Radius: 0.06
-  m_Center: {x: 0.01, y: -0.04, z: 0.06}
---- !u!54 &4365507663174464771
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5935638127216179626}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
---- !u!114 &7465094680106701269
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5935638127216179626}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0a1ea3450a0bc641b9abb429a5e926d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  fingerInteractor: {fileID: 8345905064245155416}
 --- !u!4 &5949226458177887912 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -5712721285632293740, guid: bf7151579c38e2a44be94ba8773876c1,
@@ -537,7 +454,7 @@ MonoBehaviour:
   m_TrackingAcquired:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8345905064245155416}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FingerInteractorMono, Assembly-CSharp
         m_MethodName: UpdateFingerVisibility
         m_Mode: 6
@@ -552,7 +469,7 @@ MonoBehaviour:
   m_TrackingLost:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8345905064245155416}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: FingerInteractorMono, Assembly-CSharp
         m_MethodName: UpdateFingerVisibility
         m_Mode: 6
@@ -650,61 +567,6 @@ MonoBehaviour:
   m_HandMeshRenderer: {fileID: 8974925295930267644}
   m_ShowMeshWhenTrackingIsAcquired: 1
   m_HideMeshWhenTrackingIsLost: 1
---- !u!114 &8345905064245155416
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7995818304647358317}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21e804f4a19ead043b8532e64bc4e024, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  FingerHolderPrefab: {fileID: 5986210658947848538, guid: f19ec6ba6918d9341bf18881e542389d,
-    type: 3}
-  fingers:
-  - name: Thumb
-    Base: {fileID: 3197938617538725307}
-    Tip: {fileID: 5706444504353638332}
-  - name: Index
-    Base: {fileID: 6979929617570806860}
-    Tip: {fileID: 1074464196668172943}
-  - name: Middle
-    Base: {fileID: 6543945075451632433}
-    Tip: {fileID: 3662794674872738673}
-  - name: Ring
-    Base: {fileID: 29350818995901310}
-    Tip: {fileID: 2640694998269995482}
-  - name: Pinky
-    Base: {fileID: 5824236760542069775}
-    Tip: {fileID: 3577921649017584864}
-  FingerBezierPrefab: {fileID: 5653760894636385783, guid: db7a290dedca94041ba88e9c2fd96c2f,
-    type: 3}
-  FingerBeziers:
-  - name: Thumb
-    Instance: {fileID: 0}
-    BezierLine: {fileID: 0}
-    Interactable: {fileID: 0}
-  - name: Index
-    Instance: {fileID: 0}
-    BezierLine: {fileID: 0}
-    Interactable: {fileID: 0}
-  - name: Middle
-    Instance: {fileID: 0}
-    BezierLine: {fileID: 0}
-    Interactable: {fileID: 0}
-  - name: Ring
-    Instance: {fileID: 0}
-    BezierLine: {fileID: 0}
-    Interactable: {fileID: 0}
-  - name: Pinky
-    Instance: {fileID: 0}
-    BezierLine: {fileID: 0}
-    Interactable: {fileID: 0}
-  leftPalm: {fileID: 5935638127216179626}
-  rightPalm: {fileID: 0}
 --- !u!4 &8093753385322406669 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1325600225764489521, guid: bf7151579c38e2a44be94ba8773876c1,
