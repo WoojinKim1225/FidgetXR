@@ -10,10 +10,10 @@ public class FingerData : MonoBehaviour
     public Transform proximal, distal, thumbTip;
 
     public FingerInteractable controllingObject;
-    public FloatButton curlAmount = new FloatButton(0);
-    public FloatButton touchAmount = new FloatButton(0);
-    public FloatButton pinchAmount = new FloatButton(0);
-    public FloatButton tapAmount = new FloatButton(0);
+    public FloatButton curlAmount = new FloatButton(0, 0.2f);
+    public FloatButton touchAmount = new FloatButton(0, 0.2f);
+    public FloatButton pinchAmount = new FloatButton(0, 0.2f);
+    public FloatButton tapAmount = new FloatButton(0, 0.2f);
 
     public Vector2 curlThreshold;
     public Vector2 pinchThreshold;
@@ -23,19 +23,20 @@ public class FingerData : MonoBehaviour
 
     void Update()
     {
-        curlAmount.OnUpdate(Vector3.Angle(proximal.forward, distal.forward), curlThreshold, 1f);
+        float dt = Time.deltaTime;
+        curlAmount.OnUpdate(Vector3.Angle(proximal.forward, distal.forward), curlThreshold, 1f, dt);
         if (transform.parent == thumbTip) {
-            pinchAmount.OnUpdate(-1f, pinchThreshold, -1f);
-            tapAmount.OnUpdate(-1f, tapThreshold, -1f);
+            pinchAmount.OnUpdate(-1f, pinchThreshold, -1f, dt);
+            tapAmount.OnUpdate(-1f, tapThreshold, -1f, dt);
         } else {
-            pinchAmount.OnUpdate(Vector3.Distance(transform.position, thumbTip.position), pinchThreshold, -1f);
-            tapAmount.OnUpdate(Vector3.Distance(proximal.position, thumbTip.position), tapThreshold, -1f);
+            pinchAmount.OnUpdate(Vector3.Distance(transform.position, thumbTip.position), pinchThreshold, -1f, dt);
+            tapAmount.OnUpdate(Vector3.Distance(proximal.position, thumbTip.position), tapThreshold, -1f, dt);
         }
         if (controllingObject == null) {
-            touchAmount.OnUpdate(-1, touchThreshold, -1f);
+            touchAmount.OnUpdate(-1, touchThreshold, -1f, dt);
             return;
         }
-        touchAmount.OnUpdate(controllingObject.DistanceFunction(transform), touchThreshold, -1f);
+        touchAmount.OnUpdate(controllingObject.DistanceFunction(transform), touchThreshold, -1f, dt);
 
         //------------------
 
@@ -49,10 +50,16 @@ public class FingerData : MonoBehaviour
     void OnTriggerEnter(Collider other)
     {
         controllingObject = other.GetComponent<FingerInteractable>();
+        controllingObject.fingerActions.hover.OnEnter.Invoke();
+    }
+
+    void OnTriggerStay(Collider other) {
+        controllingObject.fingerActions.hover.OnStay.Invoke();
     }
 
     void OnTriggerExit(Collider other)
     {
+        controllingObject.fingerActions.hover.OnExit.Invoke();
         controllingObject = null;
     }
 
@@ -68,6 +75,9 @@ public class FingerData : MonoBehaviour
                 stateful.OnExit.Invoke();
                 break;
             case EButtonState.None:
+                break;
+            case EButtonState.Click:
+                stateful.OnClick.Invoke();
                 break;
             default:
                 break;

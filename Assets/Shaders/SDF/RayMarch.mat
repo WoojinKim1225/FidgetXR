@@ -50,7 +50,7 @@ Material:
     - _Radius: 0.02
     - _SHADOWS_SOFT: 1
     - _SubSurfaceIntensity: 1
-    - _SubSurfacePower: 1
+    - _SubSurfacePower: 5
     - _UNIVERSAL_LIGHTING_INCLUDED: 1
     m_Colors:
     - _LeftEyePos: {r: 0, g: 0, b: 0, a: 0}

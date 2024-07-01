@@ -11,6 +11,11 @@ public class FingerActions {
     public EFingerNumber fingerMask;
 
     /// <summary>
+    /// this event occurs when the Finger Tip is in the Trigger zone;
+    /// </summary>
+    public UnityEventStateful hover;
+
+    /// <summary>
     /// this event occurs when the Angle between proximal and distal is greater than threshold;
     /// </summary>
     public UnityEventStateful curl;

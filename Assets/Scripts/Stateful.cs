@@ -42,19 +42,23 @@ public class FloatButton{
     public float initialValue;
     public EButtonState state;
 
-    public FloatButton(float val) {
+    public Vector2 timer;
+
+    public FloatButton(float val, float timerInitial) {
         value = val;
         beforeValue = val;
         isChanged = false;
         initialValue = val;
         state = 0;
+        timer = new Vector2(timerInitial, 0);
     }
 
-    public void OnUpdate(float val, Vector2 threshold, float direction) {
+    public void OnUpdate(float val, Vector2 threshold, float direction, float dt) {
         if (threshold.x * direction <= threshold.y * direction) {
             Debug.LogError("The Threshold of " + ToString() + "'s in value and out value is invalid!");
             return;
         }
+        if (timer.y > 0) timer.y -= dt;
         beforeValue = value;
         value = val;
         isChanged = beforeValue == val;
@@ -62,13 +66,17 @@ public class FloatButton{
             state = EButtonState.None;
         }
         if (value * direction < threshold.y * direction && state == EButtonState.Hold) {
-            state = EButtonState.Pull;
+            if (timer.y > 0) {
+                timer.y = 0;
+                state = EButtonState.Click;
+            } else state = EButtonState.Pull;
         }
         if (value * direction > threshold.y * direction && state == EButtonState.Press) {
             state = EButtonState.Hold;
         }
         if (value * direction > threshold.x * direction && state == EButtonState.None) {
             state = EButtonState.Press;
+            timer.y = timer.x;
         }
     }
 }
