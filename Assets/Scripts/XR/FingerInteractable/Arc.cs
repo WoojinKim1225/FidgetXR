@@ -16,6 +16,8 @@ public class Arc : FingerInteractable
     public int arcSegmentCount = 3;
     public Transform valueVisual;
 
+    public Float valueAngle = new Float(0);
+
     public override float DistanceFunction(Transform from){
         return 0;
     }
@@ -24,8 +26,10 @@ public class Arc : FingerInteractable
     {
         arcVisual = GetComponentInChildren<LineRenderer>();    
     }
+
     public void Update()
     {
+        valueAngle.OnUpdate();
         arcVisual.positionCount = arcSegmentCount + 1;
         arcVisual.transform.forward = -transform.TransformDirection(axisOS);
         for (int i = 0; i < arcVisual.positionCount; i++) {

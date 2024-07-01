@@ -27,7 +27,12 @@ public class Float{
     public void OnUpdate(float val) {
         this.beforeValue = this.value;
         this.value = val;
-        this.isChanged = this.beforeValue == val;
+        this.isChanged = this.beforeValue != val;
+    }
+
+    public void OnUpdate() {
+        this.isChanged = this.beforeValue != this.value;
+        this.beforeValue = this.value;
     }
 }
 public enum EButtonState{
