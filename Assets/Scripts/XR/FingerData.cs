@@ -49,7 +49,9 @@ public class FingerData : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        controllingObject = other.GetComponent<FingerInteractable>();
+        FingerInteractable interactable = other.GetComponent<FingerInteractable>();
+        if (((int)interactable.fingerActions.fingerMask & (int)fingerNumber) == 0) return;
+        controllingObject = interactable;
         controllingObject.fingerActions.hover.OnEnter.Invoke();
     }
 

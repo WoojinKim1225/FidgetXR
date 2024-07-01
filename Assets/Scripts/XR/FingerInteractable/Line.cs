@@ -27,6 +27,7 @@ public class Line : FingerInteractable
         positionWSUnclamped = startPosWS + Vector3.Dot(from.position - startPosWS, Vector3.Normalize(endPosWS - startPosWS)) * Vector3.Normalize(endPosWS - startPosWS);
         position01Unclamped = (positionWS - startPosWS).magnitude / (endPosWS - startPosWS).magnitude;
         positionOSUnclamped = Vector3.LerpUnclamped(startPositionOS, endPositionOS, position01Unclamped);
+        
         position01 = Mathf.Clamp01(position01Unclamped);
         positionOS = Vector3.Lerp(startPositionOS, endPositionOS, position01);
         positionWS = Vector3.Lerp(startPosWS, endPosWS, position01);
