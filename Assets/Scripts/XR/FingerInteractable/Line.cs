@@ -42,7 +42,7 @@ public class Line : FingerInteractable
 
     void Awake()
     {
-        lineVisual = GetComponentInChildren<LineRenderer>();    
+        lineVisual = GetComponentInChildren<LineRenderer>(); 
     }
     public void Update()
     {

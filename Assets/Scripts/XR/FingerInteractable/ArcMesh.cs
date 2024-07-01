@@ -13,27 +13,27 @@ public class ArcMesh : MonoBehaviour
 
     private List<Vector3> vertices;
     private List<int> triangles;
+    List<Vector2> uv;
 
     void Awake()
     {
         meshFilter = GetComponent<MeshFilter>();
     }
 
-    void Update()
+    public void OnUpdate()
     {
-        if (!arc.valueAngle.isChanged) return;
-        float radius = arc.radius - arc.arcVisual.startWidth / 2;
+        float radius = arc.Radius - arc.arcVisual.startWidth / 2;
         vertices = new List<Vector3>
         {
             // Add the first vertex at the origin
             Vector3.zero
         };
 
-        float angleStep = Mathf.Abs(arc.endAngle - arc.startAngle) / arc.arcSegmentCount;
-        for (int i = 0; i <= arc.arcSegmentCount; i++)
+        float angleStep = Mathf.Abs(arc.EndAngle - arc.StartAngle) / arc.ArcSegmentCount;
+        for (int i = 0; i <= arc.ArcSegmentCount; i++)
         {
-            float angleRad = Mathf.Deg2Rad * (arc.startAngle + angleStep * i);
-            vertices.Add(radius * new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad), 0));
+            float angleRad = Mathf.Deg2Rad * (arc.StartAngle + angleStep * i);
+            vertices.Add(radius * new Vector3(Mathf.Sin(angleRad), Mathf.Cos(angleRad), 0));
         }
 
         triangles = new List<int>();
@@ -45,7 +45,7 @@ public class ArcMesh : MonoBehaviour
             triangles.Add(i + 1);     // Next vertex index
         }
 
-        List<Vector2> uv = new List<Vector2>();
+        uv = new List<Vector2>();
 
         for (int i = 0; i < vertices.Count; i++)
         {

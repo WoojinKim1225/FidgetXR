@@ -40,5 +40,7 @@ public abstract class FingerInteractable : MonoBehaviour
 {
     public FingerActions fingerActions;
 
+    public bool isInteractable;
+
     public abstract float DistanceFunction(Transform from);
 }

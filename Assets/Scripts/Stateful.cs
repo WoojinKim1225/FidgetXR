@@ -35,6 +35,34 @@ public class Float{
         this.beforeValue = this.value;
     }
 }
+
+[System.Serializable]
+public class Float3{
+    public Vector3 value;
+    public Vector3 beforeValue;
+    public bool isChanged;
+    public Vector3 initialValue;
+
+    public Float3(Vector3 val) {
+        value = val;
+        beforeValue = val;
+        isChanged = false;
+        initialValue = val;
+    }
+
+    public void OnUpdate(Vector3 val) {
+        beforeValue = value;
+        value = val;
+        isChanged = beforeValue != val;
+    }
+
+    public void OnUpdate() {
+        isChanged = beforeValue != value;
+        beforeValue = value;
+    }
+}
+
+
 public enum EButtonState{
     None = 0, Press = 1, Pull = 2, Hold = 3, Click = 4
 }
