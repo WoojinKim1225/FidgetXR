@@ -11,6 +11,9 @@ public class ArcMesh : MonoBehaviour
     public Arc arc;
     //public bool isUpdate;
 
+    private List<Vector3> vertices;
+    private List<int> triangles;
+
     void Awake()
     {
         meshFilter = GetComponent<MeshFilter>();
@@ -20,7 +23,7 @@ public class ArcMesh : MonoBehaviour
     {
         if (!arc.valueAngle.isChanged) return;
         float radius = arc.radius - arc.arcVisual.startWidth / 2;
-        List<Vector3> vertices = new List<Vector3>
+        vertices = new List<Vector3>
         {
             // Add the first vertex at the origin
             Vector3.zero
@@ -31,10 +34,9 @@ public class ArcMesh : MonoBehaviour
         {
             float angleRad = Mathf.Deg2Rad * (arc.startAngle + angleStep * i);
             vertices.Add(radius * new Vector3(Mathf.Cos(angleRad), Mathf.Sin(angleRad), 0));
-            
         }
 
-        List<int> triangles = new List<int>();
+        triangles = new List<int>();
 
         for (int i = 1; i < vertices.Count - 1; i++)
         {

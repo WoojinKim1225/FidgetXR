@@ -43,14 +43,15 @@ Material:
     m_Ints: []
     m_Floats:
     - UNIVERSAL_LIGHTING_INCLUDED: 0
+    - _FresnelPower: 3
     - _IPD: 0.022
     - _MAIN_LIGHT_SHADOWS: 1
     - _MAIN_LIGHT_SHADOWS_CASCADE: 1
     - _NormalInfluence: 2
     - _Radius: 0.02
     - _SHADOWS_SOFT: 1
-    - _SubSurfaceIntensity: 1
-    - _SubSurfacePower: 5
+    - _SubSurfaceIntensity: 0.28
+    - _SubSurfacePower: 2
     - _UNIVERSAL_LIGHTING_INCLUDED: 1
     m_Colors:
     - _LeftEyePos: {r: 0, g: 0, b: 0, a: 0}
